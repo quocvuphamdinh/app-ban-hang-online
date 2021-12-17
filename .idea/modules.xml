@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/App_Ban_Hang.iml" filepath="$PROJECT_DIR$/.idea/modules/App_Ban_Hang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/App_Ban_Hang.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/App_Ban_Hang.app.iml" />
+    </modules>
+  </component>
+</project>

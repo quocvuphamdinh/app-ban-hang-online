@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_button_login.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_checkbox.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_cursor_color.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_indicator.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_spinner.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/ic_online.xml" value="0.15260416666666668" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_detail.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_game.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_home.xml" value="0.23541666666666666" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/fragment_game.xml" value="0.13645833333333332" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/game_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/game_item_row.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/header_nav_view.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/home3_item_row.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/home_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/home_item_row.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/laptop_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/laptop_item_row.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/phone_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/playstation_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/profile_fragment.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/tab1_laptop_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/tab2_laptop_layout.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/tab3_laptop_layout.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/view_pager_laptop_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/menu/menu_nav_view.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

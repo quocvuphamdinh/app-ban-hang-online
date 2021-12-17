@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:id="@+id/menu_home"
+        android:icon="@drawable/home"
+        android:title="Home"/>
+    <item android:id="@+id/menu_game"
+        android:icon="@drawable/game"
+        android:title="Game"/>
+    <item android:title="Phụ kiện">
+        <menu>
+            <item android:id="@+id/menu_laptop"
+                android:title="Laptop"
+                android:icon="@drawable/laptop"/>
+            <item android:icon="@drawable/play_station"
+                android:title="PlayStation"
+                android:id="@+id/menu_ps5"/>
+            <item android:id="@+id/menu_smartphone"
+                android:icon="@drawable/smartphone"
+                android:title="Điện thoại"/>
+            <item android:id="@+id/menu_mouse"
+                android:icon="@drawable/mouse"
+                android:title="Chuột"/>
+            <item android:id="@+id/menu_keyboard"
+                android:icon="@drawable/keyboard"
+                android:title="Bàn phím"/>
+        </menu>
+    </item>
+    <item android:title="Hồ sơ cá nhân">
+        <menu>
+            <item android:title="Profile"
+                android:id="@+id/menu_profile"
+                android:icon="@drawable/profile"/>
+            <item android:title="Giỏ hàng"
+                android:id="@+id/menu_giohang"
+                android:icon="@drawable/shopping_cart"/>
+        </menu>
+    </item>
+
+</menu>
