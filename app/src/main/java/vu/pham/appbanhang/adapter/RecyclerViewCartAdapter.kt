@@ -15,7 +15,6 @@ import java.text.DecimalFormat
 class RecyclerViewCartAdapter : RecyclerView.Adapter<RecyclerViewCartAdapter.CartHolder>{
    private var cartSanPhamList:ArrayList<CartSanPham> = ArrayList()
     private var checkBoxChecked:CheckBoxItem
-    private var isSelectedAll=false
 
     constructor(checkBoxChecked: CheckBoxItem) : super() {
         this.checkBoxChecked = checkBoxChecked
@@ -23,6 +22,8 @@ class RecyclerViewCartAdapter : RecyclerView.Adapter<RecyclerViewCartAdapter.Car
 
     interface CheckBoxItem{
         fun checkedItem(cartSanPham: CartSanPham, state:Boolean)
+        fun checkedItem2(cartSanPham: CartSanPham, state: Boolean)
+        fun tangVaGiamSoLuongChange(cartSanPham: CartSanPham)
     }
     fun setData(lists:ArrayList<CartSanPham>){
         this.cartSanPhamList = lists
@@ -63,23 +64,16 @@ class RecyclerViewCartAdapter : RecyclerView.Adapter<RecyclerViewCartAdapter.Car
         holder.txtGia.text = "${decimalFormat.format(cartSanPham.getGiaSanPham())} Đ"
         holder.txtSoLuong.text = cartSanPham.getSoLuong().toString()
         holder.txtCreateAt.text = "${cartSanPham.getCreateAt()?.date}/${cartSanPham.getCreateAt()?.month?.plus(1)}/${cartSanPham.getCreateAt()?.year?.plus(1900)}"
-
-        if(cartSanPham.getSoLuong()==10){
-            holder.buttonTang.visibility = View.INVISIBLE
-        }
-        if(cartSanPham.getSoLuong()==1){
-            holder.buttonGiam.visibility = View.INVISIBLE
-        }
-
-        if(!isSelectedAll){
-            holder.checkBox.isChecked = false
-        }
-        if(isSelectedAll){
+        if(cartSanPham.getSelected()==1){
             holder.checkBox.isChecked = true
+            checkBoxChecked.checkedItem2(cartSanPham, true)
+        }else if (cartSanPham.getSelected()==0){
+            holder.checkBox.isChecked = false
         }
 
         holder.buttonTang.setOnClickListener {
             cartSanPham.setSoLuong(cartSanPham.getSoLuong()+1)
+            cartSanPham.setTongTien(cartSanPham.getGiaSanPham() * cartSanPham.getSoLuong())
             holder.txtSoLuong.text = cartSanPham.getSoLuong().toString()
             if(cartSanPham.getSoLuong()>=10){
                 holder.buttonTang.visibility = View.INVISIBLE
@@ -89,6 +83,7 @@ class RecyclerViewCartAdapter : RecyclerView.Adapter<RecyclerViewCartAdapter.Car
             if (cartSanPham.getSoLuong()>1){
                 holder.buttonGiam.visibility = View.VISIBLE
             }
+            checkBoxChecked.tangVaGiamSoLuongChange(cartSanPham)
         }
         holder.buttonGiam.setOnClickListener {
             cartSanPham.setSoLuong(cartSanPham.getSoLuong()-1)
@@ -101,26 +96,20 @@ class RecyclerViewCartAdapter : RecyclerView.Adapter<RecyclerViewCartAdapter.Car
             if(cartSanPham.getSoLuong()<10){
                 holder.buttonTang.visibility = View.VISIBLE
             }
+            checkBoxChecked.tangVaGiamSoLuongChange(cartSanPham)
         }
         holder.checkBox.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked){
+                    cartSanPham.setSelected(1)
                     checkBoxChecked.checkedItem(cartSanPham, true)
                 }else{
+                    cartSanPham.setSelected(0)
                     checkBoxChecked.checkedItem(cartSanPham, false)
                 }
             }
         })
     }
-    fun selectAll(){
-        isSelectedAll = true
-        notifyDataSetChanged()
-    }
-    fun unselectAll(){
-        isSelectedAll = false
-        notifyDataSetChanged()
-    }
-
     override fun getItemCount(): Int {
        return cartSanPhamList.size
     }

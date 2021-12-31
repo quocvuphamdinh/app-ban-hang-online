@@ -5,12 +5,14 @@ import android.os.Parcelable
 import java.sql.Timestamp
 
 class Cart() : Parcelable {
+    private var id:Long=0
     private var userId:Long=0
     private var sanPhamId:Long=0
     private var trangThai:Long=0
     private var trangThaiName:String=""
     private var soLuong:Int=0
-    private var id:Long=0
+    private var selected:Int=0
+    private var tongTien:Int=0
     private var createAt: Timestamp?=null
     private var updateAt: Timestamp?=null
     private var deleted:Int=0
@@ -27,8 +29,22 @@ class Cart() : Parcelable {
         createAt =  Timestamp(parcel.readLong())
         updateAt = Timestamp(parcel.readLong())
         deletedAt = Timestamp(parcel.readLong())
+        selected = parcel.readInt()
+        tongTien = parcel.readInt()
     }
 
+    fun getTongTien():Int{
+        return tongTien
+    }
+    fun setTongTien(tong:Int){
+        tongTien = tong
+    }
+    fun getSelected():Int{
+        return selected
+    }
+    fun setSelected(select:Int){
+        selected = select
+    }
     fun getSoLuong():Int{
         return soLuong
     }
@@ -105,6 +121,8 @@ class Cart() : Parcelable {
         createAt?.date?.let { parcel.writeLong(it.toLong()) }
         updateAt?.date?.let { parcel.writeLong(it.toLong()) }
         deletedAt?.date?.let { parcel.writeLong(it.toLong()) }
+        parcel.writeInt(selected)
+        parcel.writeInt(tongTien)
     }
 
     companion object CREATOR : Parcelable.Creator<Cart> {

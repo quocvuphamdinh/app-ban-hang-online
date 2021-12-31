@@ -2,6 +2,7 @@ package vu.pham.appbanhang.fragment
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +19,12 @@ import vu.pham.appbanhang.adapter.RecyclerViewCartAdapter
 import vu.pham.appbanhang.loaddata.GetListCart
 import vu.pham.appbanhang.loaddata.GetListCartSanPham
 import vu.pham.appbanhang.loaddata.GetSanPham
+import vu.pham.appbanhang.loaddata.Update
 import vu.pham.appbanhang.model.Cart
 import vu.pham.appbanhang.model.CartSanPham
 import vu.pham.appbanhang.model.SanPham
 import vu.pham.appbanhang.model.User
+import java.sql.Timestamp
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,16 +32,16 @@ import kotlin.collections.ArrayList
 class CartFragment : Fragment() {
 
     private val CART_ID=1
+    private var CART_CHECK_ID=2
     private lateinit var user: User
     private lateinit var cartLoader:LoaderManager.LoaderCallbacks<ArrayList<CartSanPham>>
+    private lateinit var cartCheckLoader:LoaderManager.LoaderCallbacks<Boolean>
     private lateinit var cartList:ArrayList<CartSanPham>
     private lateinit var recyclerViewCart:RecyclerView
-    private lateinit var txtChonTatCa:TextView
     private lateinit var adapterCart : RecyclerViewCartAdapter
     private lateinit var buttonXuLyCart:Button
     private lateinit var listsBottomSheet:ArrayList<CartSanPham>
     private lateinit var adapterBottomSheetDialog:ListCartBottomSheetDialogAdapter
-    private var isSelectedAll=false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,25 +53,7 @@ class CartFragment : Fragment() {
         buttonXuLyCart.setOnClickListener {
             showBottomSheetDialog()
         }
-        txtChonTatCa.setOnClickListener {
-            chonTatCaCart()
-        }
         return view
-    }
-
-    private fun chonTatCaCart() {
-        if(isSelectedAll){
-            isSelectedAll = false
-        }
-        if (!isSelectedAll){
-            isSelectedAll = true
-        }
-        if(isSelectedAll){
-            adapterCart.selectAll()
-        }
-        if (!isSelectedAll){
-            adapterCart.unselectAll()
-        }
     }
 
     private fun getUser() {
@@ -104,6 +89,31 @@ class CartFragment : Fragment() {
         }
         loaderManager.initLoader(CART_ID, null, cartLoader)
     }
+    private fun updateCheckedCart(cartSanPhamCheck: CartSanPham){
+        val timeNow = Timestamp(System.currentTimeMillis())
+        cartCheckLoader = object : LoaderManager.LoaderCallbacks<Boolean>{
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<Boolean> {
+                return context?.let { Update(it, "UPDATE giohang SET selected = ${cartSanPhamCheck.getSelected()}, soluong = ${cartSanPhamCheck.getSoLuong()}, " +
+                        "tongtien = ${cartSanPhamCheck.getTongTien()}, update_at='${timeNow}' WHERE id = ${cartSanPhamCheck.getId()}") }!!
+            }
+
+            override fun onLoadFinished(loader: Loader<Boolean>, data: Boolean?) {
+                if (data!=null){
+                    if (data){
+                        Toast.makeText(context, "Cập nhật thành công !", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context, "Cập nhật thất bại !", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                CART_CHECK_ID+=1
+            }
+
+            override fun onLoaderReset(loader: Loader<Boolean>) {
+
+            }
+        }
+        loaderManager.initLoader(CART_CHECK_ID, null, cartCheckLoader)
+    }
     private fun showCart(){
         adapterCart = RecyclerViewCartAdapter(object : RecyclerViewCartAdapter.CheckBoxItem{
             override fun checkedItem(cartSanPham: CartSanPham, state: Boolean) {
@@ -112,6 +122,17 @@ class CartFragment : Fragment() {
                }else{
                    listsBottomSheet.remove(cartSanPham)
                }
+                updateCheckedCart(cartSanPham)
+            }
+
+            override fun checkedItem2(cartSanPham: CartSanPham, state: Boolean) {
+                if(state) {
+                    listsBottomSheet.add(cartSanPham)
+                }
+            }
+
+            override fun tangVaGiamSoLuongChange(cartSanPham: CartSanPham) {
+                updateCheckedCart(cartSanPham)
             }
         })
         adapterCart.setData(cartList)
@@ -156,8 +177,7 @@ class CartFragment : Fragment() {
     private fun tinhTongTien(lists:ArrayList<CartSanPham>):Int{
         var tong =0
         for (i in 0 until lists.size){
-            val tong2=lists[i].getGiaSanPham() * lists[i].getSoLuong()
-            tong+=tong2
+            tong+=lists[i].getTongTien()
         }
         return tong
     }
@@ -165,7 +185,6 @@ class CartFragment : Fragment() {
     private fun anhXa(view: View) {
         recyclerViewCart = view.findViewById(R.id.recyclerViewCart)
         buttonXuLyCart = view.findViewById(R.id.buttonXuLyCart)
-        txtChonTatCa = view.findViewById(R.id.textViewChonTatCaCart)
         cartList = ArrayList()
         listsBottomSheet = ArrayList()
     }

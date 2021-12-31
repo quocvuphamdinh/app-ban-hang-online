@@ -46,10 +46,12 @@ class DetailActivity : AppCompatActivity() {
 
     private fun themVaoGioHang() {
         val soluong = spinner.selectedItem.toString()
-        val timeNow :Timestamp = Timestamp(System.currentTimeMillis())
+        val timeNow = Timestamp(System.currentTimeMillis())
+        val soluongInt=soluong.toInt()
+        val tongtien = sanPham.getGiaSanPham() * soluongInt
         insertCartLoader = object : LoaderManager.LoaderCallbacks<Long>{
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<Long> {
-                val sql="INSERT INTO giohang (user_id, sanpham_id, create_at, soluong) VALUES (${user.getId()}, ${sanPham.getId()}, '${timeNow}', ${soluong})"
+                val sql="INSERT INTO giohang (user_id, sanpham_id, create_at, soluong, tongtien) VALUES (${user.getId()}, ${sanPham.getId()}, '${timeNow}', ${soluong}, ${tongtien})"
                 return Insert(this@DetailActivity, sql)
             }
 

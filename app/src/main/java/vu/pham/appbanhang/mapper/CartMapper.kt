@@ -15,6 +15,8 @@ class CartMapper {
         cart.setDeleted(resultSet.getInt("deleted"))
         cart.setDeletedAt(resultSet.getTimestamp("deleted_at"))
         cart.setSoLuong(resultSet.getInt("soluong"))
+        cart.setSelected(resultSet.getInt("selected"))
+        cart.setTongTien(resultSet.getInt("tongtien"))
         return cart
     }
 }

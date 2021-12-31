@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textViewTitleCart"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -12,18 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:drawableStart="@drawable/ic_check_all"
-        android:id="@+id/textViewChonTatCaCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:padding="5dp"
-        android:text="Chọn tất cả"
-        android:textColor="#F44336"
-        android:textStyle="bold" />
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/textViewChonTatCaCart"
+        android:layout_below="@id/textViewTitleCart"
         android:background="#D3D3D3"
         android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"

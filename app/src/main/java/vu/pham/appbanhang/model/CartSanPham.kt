@@ -3,12 +3,14 @@ package vu.pham.appbanhang.model
 import java.sql.Timestamp
 
 class CartSanPham {
+    private var id:Long=0
     private var userId:Long=0
     private var sanPhamId:Long=0
     private var trangThai:Long=0
     private var trangThaiName:String=""
     private var soLuong:Int=0
-    private var id:Long=0
+    private var selected:Int=0
+    private var tongTien:Int=0
     private var createAt: Timestamp?=null
     private var updateAt: Timestamp?=null
     private var deleted:Int=0
@@ -17,6 +19,18 @@ class CartSanPham {
     private var giaSanPham:Int =0
     private var hinhAnh:String=""
 
+    fun getTongTien():Int{
+        return tongTien
+    }
+    fun setTongTien(tong:Int){
+        tongTien = tong
+    }
+    fun getSelected():Int{
+        return selected
+    }
+    fun setSelected(select:Int){
+        selected = select
+    }
     fun getSoLuong():Int{
         return soLuong
     }

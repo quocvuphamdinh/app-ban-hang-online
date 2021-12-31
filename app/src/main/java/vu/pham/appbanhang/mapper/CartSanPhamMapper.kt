@@ -15,6 +15,8 @@ class CartSanPhamMapper {
         cartSanPham.setDeleted(resultSet.getInt("deleted"))
         cartSanPham.setDeletedAt(resultSet.getTimestamp("deleted_at"))
         cartSanPham.setSoLuong(resultSet.getInt("soluong"))
+        cartSanPham.setSelected(resultSet.getInt("selected"))
+        cartSanPham.setTongTien(resultSet.getInt("tongtien"))
         cartSanPham.setTenSanPham(resultSet.getString("tensanpham"))
         cartSanPham.setGiaSanPham(resultSet.getInt("giasanpham"))
         cartSanPham.setHinhAnh(resultSet.getString("hinhanh"))
