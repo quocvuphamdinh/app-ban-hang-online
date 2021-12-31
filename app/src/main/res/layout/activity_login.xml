@@ -90,10 +90,10 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:buttonTint="@color/custom_checkbox"
             android:id="@+id/checkBoxLoginState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/custom_checkbox"
             android:text="@string/checkbox_state" />
         <TextView
             android:id="@+id/textViewForgotPassword"
@@ -104,6 +104,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/progressBarLogin"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:indeterminateTint="#FF5722"/>
     <Button
         android:id="@+id/buttonLogin"
         android:textColor="@color/white"

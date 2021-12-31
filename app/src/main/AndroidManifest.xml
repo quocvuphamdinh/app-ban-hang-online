@@ -17,9 +17,6 @@
             android:name=".activity.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.GameActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.HomeActivity"
             android:exported="false" />
         <activity

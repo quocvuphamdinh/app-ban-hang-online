@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="Danh sách sản phẩm"
+            android:layout_width="230dp"
+            android:layout_height="match_parent"/>
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="10dp"
+            android:layout_margin="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/buttonQuayLai"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:text="Quay lại"
+                android:background="#FF5722"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/listViewSanPham"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

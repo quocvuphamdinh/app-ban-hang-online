@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:textCursorDrawable="@drawable/custom_cursor_color_2"
+        android:paddingStart="5dp"
+        android:id="@+id/editTextSearchMouseFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_edit_text_search"
+        android:drawableStart="@drawable/ic_search"
+        android:hint="Tìm kiếm..."
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        tools:ignore="RtlSymmetry" />
+
+    <TextView
+        android:id="@+id/textViewMouse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextSearchMouseFragment"
+        android:padding="10dp"
+        android:text="Danh sách chuột mới nhất"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recylerViewMouse"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textViewMouse" />
+</RelativeLayout>

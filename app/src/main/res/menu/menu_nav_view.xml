@@ -29,12 +29,12 @@
     </item>
     <item android:title="Hồ sơ cá nhân">
         <menu>
-            <item android:title="Profile"
-                android:id="@+id/menu_profile"
-                android:icon="@drawable/profile"/>
             <item android:title="Giỏ hàng"
                 android:id="@+id/menu_giohang"
                 android:icon="@drawable/shopping_cart"/>
+            <item android:title="Profile"
+                android:id="@+id/menu_profile"
+                android:icon="@drawable/profile"/>
         </menu>
     </item>
 

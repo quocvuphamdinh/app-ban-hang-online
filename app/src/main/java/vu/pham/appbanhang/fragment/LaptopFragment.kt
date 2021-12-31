@@ -1,5 +1,6 @@
 package vu.pham.appbanhang.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -14,16 +15,37 @@ import vu.pham.appbanhang.R
 import vu.pham.appbanhang.adapter.RecyclerViewHomeAdapter
 import vu.pham.appbanhang.model.SanPham
 import android.widget.TextView
+import android.widget.Toast
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.squareup.picasso.Picasso
 import me.relex.circleindicator.CircleIndicator
+import vu.pham.appbanhang.activity.HomeActivity
 import vu.pham.appbanhang.adapter.LaptopViewPagerAdapter
-import vu.pham.appbanhang.adapter.RecyclerViewLaptop
+import vu.pham.appbanhang.adapter.RecyclerViewLaptopAdapter
+import vu.pham.appbanhang.loaddata.GetListLoai
+import vu.pham.appbanhang.loaddata.GetListQuangCao
+import vu.pham.appbanhang.loaddata.GetListSanPham
+import vu.pham.appbanhang.loaddata.GetSanPham
+import vu.pham.appbanhang.model.Loai
+import vu.pham.appbanhang.model.QuangCao
 
 
 class LaptopFragment : Fragment() {
-
+    companion object{
+        private var isShow=false
+        private var LAPTOP_ID=7
+    }
+    private lateinit var getListQuangCao:LoaderManager.LoaderCallbacks<ArrayList<QuangCao>>
+    private lateinit var getLaptopAllLoader:LoaderManager.LoaderCallbacks<ArrayList<SanPham>>
+    private lateinit var getLaptopVanPhongPhoBien:LoaderManager.LoaderCallbacks<ArrayList<SanPham>>
+    private lateinit var laptopLoader:LoaderManager.LoaderCallbacks<SanPham>
+    private val LAPTOP_ALL_ID=3
+    private val LAPTOP_VANPHONG_ID=5
+    private val QUANGCAO_ID=6
+    private lateinit var homeActivity: HomeActivity
     private lateinit var tabHost:TabHost
     private lateinit var recylerView1:RecyclerView
     private lateinit var recylerView2:RecyclerView
@@ -33,15 +55,26 @@ class LaptopFragment : Fragment() {
     private lateinit var laptopTatCa:ArrayList<SanPham>
     private lateinit var laptopGaming:ArrayList<SanPham>
     private lateinit var laptopVanPhong:ArrayList<SanPham>
+    private lateinit var laptopVanPhongMacbook:ArrayList<SanPham>
+    private lateinit var laptopVanPhongBinhThuong:ArrayList<SanPham>
     private lateinit var adapterTatCa: RecyclerViewHomeAdapter
-    private lateinit var adapterGaming: RecyclerViewLaptop
-    private lateinit var adapterVanPhong: RecyclerViewLaptop
+    private lateinit var adapterGaming: RecyclerViewLaptopAdapter
+    private lateinit var adapterVanPhong: RecyclerViewLaptopAdapter
     private lateinit var viewPager:ViewPager
     private lateinit var circleIndicator:CircleIndicator
-    private lateinit var viewPagerLists:ArrayList<SanPham>
+    private lateinit var quangCaoList:ArrayList<QuangCao>
+    private val sqlGetAllLaptop="SELECT sanpham.*, loaisanpham.tenloai FROM sanpham INNER JOIN loaisanpham ON sanpham.loai_id=loaisanpham.id WHERE sanpham.loai_id=3 OR sanpham.loai_id=7 OR sanpham.loai_id=9 ORDER BY id DESC"
+    private val sqlGetListLaptopVanPhongPhoBien="SELECT sanpham.*, loaisanpham.tenloai FROM sanpham \n" +
+            "INNER JOIN favorite_sanpham ON sanpham.id = favorite_sanpham.sanpham_id \n" +
+            "INNER JOIN loaisanpham ON sanpham.loai_id=loaisanpham.id \n" +
+            "WHERE (favorite_sanpham.favorite_id = 3 OR favorite_sanpham.favorite_id=2) AND (sanpham.loai_id =7 OR sanpham.loai_id=9)\n" +
+            "GROUP BY sanpham.id ORDER BY sanpham.id DESC"
+    private val sqlGetQuangCaoLaptopGaming="SELECT quangcao.* FROM quangcao\n" +
+            "INNER JOIN sanpham ON sanpham.id = quangcao.sanpham_id\n" +
+            "WHERE sanpham.loai_id = 3"
     private val handler: Handler = Handler()
     private val runnable = Runnable { kotlin.run {
-        if(viewPager.currentItem == viewPagerLists.size-1){
+        if(viewPager.currentItem == quangCaoList.size-1){
             viewPager.currentItem=0
         }else{
             viewPager.currentItem = viewPager.currentItem+1
@@ -56,21 +89,154 @@ class LaptopFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.laptop_fragment, container, false)
         anhXa(view)
+        initArrayList()
+        getListQuangCao()
         khoiTaoDataLaptopTatCa()
         khoiTaoDataLapTopGaming()
         khoiTaoDataLapTopVanPhong()
-        khoitaoDataViewPager()
+        initLaptopALlLoader()
+        initLaptopVanPhong()
+
+        imgViewLaptop1.setOnClickListener {
+            homeActivity.sendDataToListFragment(laptopVanPhongMacbook)
+        }
+        imgViewLaptop2.setOnClickListener {
+            homeActivity.sendDataToListFragment(laptopVanPhongBinhThuong)
+        }
         return view
     }
 
+    private fun getListQuangCao(){
+        getListQuangCao = object : LoaderManager.LoaderCallbacks<ArrayList<QuangCao>>{
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<ArrayList<QuangCao>> {
+                return context?.let { GetListQuangCao(it, sqlGetQuangCaoLaptopGaming) }!!
+            }
+
+            override fun onLoadFinished(
+                loader: Loader<ArrayList<QuangCao>>,
+                data: ArrayList<QuangCao>?
+            ) {
+                if (data != null) {
+                    quangCaoList = data
+                    khoitaoDataViewPager()
+                }
+            }
+
+            override fun onLoaderReset(loader: Loader<ArrayList<QuangCao>>) {
+                quangCaoList.clear()
+            }
+        }
+        loaderManager.initLoader(QUANGCAO_ID, null, getListQuangCao)
+    }
+    private fun initLaptopVanPhong() {
+       getLaptopVanPhongPhoBien = object : LoaderManager.LoaderCallbacks<ArrayList<SanPham>>{
+           override fun onCreateLoader(id: Int, args: Bundle?): Loader<ArrayList<SanPham>> {
+               return context?.let { GetListSanPham(it, sqlGetListLaptopVanPhongPhoBien) }!!
+           }
+
+           override fun onLoadFinished(
+               loader: Loader<ArrayList<SanPham>>,
+               data: ArrayList<SanPham>?
+           ) {
+               if (data != null) {
+                   laptopVanPhong = data
+                   adapterVanPhong.setData(laptopVanPhong, R.layout.laptop_item_row)
+               }
+           }
+
+           override fun onLoaderReset(loader: Loader<ArrayList<SanPham>>) {
+               laptopVanPhong.clear()
+           }
+       }
+        loaderManager.initLoader(LAPTOP_VANPHONG_ID, null, getLaptopVanPhongPhoBien)
+    }
+
+    private fun initLaptopBinhThuong(){
+        for(i in 0 until laptopTatCa.size){
+            if (laptopTatCa[i].getLoai()==7L){
+                laptopVanPhongBinhThuong.add(laptopTatCa[i])
+            }
+        }
+    }
+    private fun initLaptopMacBook(){
+        for(i in 0 until laptopTatCa.size){
+            if (laptopTatCa[i].getLoai()==9L){
+                laptopVanPhongMacbook.add(laptopTatCa[i])
+            }
+        }
+    }
+    private fun initLaptopGaming(){
+        for(i in 0 until laptopTatCa.size){
+            if (laptopTatCa[i].getLoai()==3L){
+                laptopGaming.add(laptopTatCa[i])
+            }
+        }
+        adapterGaming.setData(laptopGaming, R.layout.laptop_item_row)
+    }
+    private fun initLaptopALlLoader(){
+        getLaptopAllLoader = object : LoaderManager.LoaderCallbacks<ArrayList<SanPham>>{
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<ArrayList<SanPham>> {
+                return context?.let { GetListSanPham(it, sqlGetAllLaptop) }!!
+            }
+
+            override fun onLoadFinished(
+                loader: Loader<ArrayList<SanPham>>,
+                data: ArrayList<SanPham>?
+            ) {
+                if (data != null) {
+                    laptopTatCa = data
+                    adapterTatCa.setData(laptopTatCa)
+                    if(laptopGaming.size==0){
+                        initLaptopGaming()
+                    }
+                    if(laptopVanPhongMacbook.size==0){
+                        initLaptopMacBook()
+                    }
+                    if(laptopVanPhongBinhThuong.size==0){
+                        initLaptopBinhThuong()
+                    }
+                }
+            }
+
+            override fun onLoaderReset(loader: Loader<ArrayList<SanPham>>) {
+                laptopTatCa.clear()
+            }
+
+        }
+        loaderManager.initLoader(LAPTOP_ALL_ID, null, getLaptopAllLoader)
+    }
+    private fun getLaptopById(idLaptop:Long){
+        laptopLoader = object : LoaderManager.LoaderCallbacks<SanPham>{
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<SanPham> {
+                return context?.let { GetSanPham(it, "SELECT sanpham.*, loaisanpham.tenloai FROM sanpham\n" +
+                        "INNER JOIN loaisanpham ON sanpham.loai_id = loaisanpham.id\n" +
+                        "WHERE sanpham.id = $idLaptop") }!!
+            }
+
+            override fun onLoadFinished(loader: Loader<SanPham>, data: SanPham?) {
+                if(data!=null){
+                    if(!isShow){
+                        homeActivity.sendDataToDetailActivity(data)
+                    }
+                    LAPTOP_ID+=1
+                    isShow = true
+                }
+            }
+
+            override fun onLoaderReset(loader: Loader<SanPham>) {
+
+            }
+        }
+        loaderManager.initLoader(LAPTOP_ID, null, laptopLoader)
+    }
     private fun khoitaoDataViewPager() {
-        val laptopViewPagerAdapter = LaptopViewPagerAdapter()
-        viewPagerLists = ArrayList()
-        viewPagerLists.add(SanPham("Laptop Gaming MSI", 9000000, "Laptop chơi game", "https://laptopcu.cdn.vccloud.vn/wp-content/uploads/2017/04/MSI-GT80-Titan-Gaming-Laptop.jpg"))
-        viewPagerLists.add(SanPham("Laptop Acer Nitro 5", 22390000, "Laptop chơi game", "https://img.websosanh.vn/v10/users/review/images/5pytfe7wy6qfi/131png.jpg?compress=85"))
-        viewPagerLists.add(SanPham("Laptop ASUS Gaming FX506LH-HN002T", 20890000, "Laptop Gaming", "https://fptshop.com.vn/Uploads/images/2015/Tin-Tuc/QuanLNH2/asus-tuf-fx-506-19.jpg"))
-        viewPagerLists.add(SanPham("Laptop Dell Gaming G15 Ryzen Edition", 28390000, "Laptop Gaming", "https://lumen.thinkpro.vn//backend/uploads/baiviet/2021/7/6/Dell%20Gaming%20G15%205515%20Ryzen%20Edition%20khuyen%20mai%20-5-2.jpg"))
-        laptopViewPagerAdapter.setData(viewPagerLists, R.layout.view_pager_laptop_item)
+        val laptopViewPagerAdapter = LaptopViewPagerAdapter(object : LaptopViewPagerAdapter.CLickItem{
+            override fun showInfoItem(photo: QuangCao) {
+                isShow = false
+                getLaptopById(photo.getSanPhamID())
+            }
+        })
+        laptopViewPagerAdapter.setData(quangCaoList, R.layout.view_pager_laptop_item, context)
         viewPager.adapter = laptopViewPagerAdapter
         //liên kết indicator với viewpager
         circleIndicator.setViewPager(viewPager)
@@ -107,47 +273,49 @@ class LaptopFragment : Fragment() {
         handler.postDelayed(runnable, 2000)
     }
 
-
     private fun khoiTaoDataLapTopVanPhong() {
         Picasso.get().load("https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-pro-13-og-202011?wid=600&hei=315&fmt=jpeg&qlt=95&.v=1604347427000")
             .into(imgViewLaptop1)
         Picasso.get().load("https://www.anphatpc.com.vn/media/news/1601_top1.jpg").into(imgViewLaptop2)
         laptopVanPhong = ArrayList()
-        laptopVanPhong.add(SanPham("MacBook Air M1", 29900000, "MacBook M1", "https://mac24h.vn/images/thumbnails/350/268/detailed/48/macbook-air_m1-2021-_MAC24H.png?t=1629457233"))
-        laptopVanPhong.add(SanPham("Laptop Asus VivoBook", 18990000, "Laptop văn phòng", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/1000x/040ec09b1e35df139433887a97daa66f/_/0/_0004_asus-vivobook-a515ea-bq498t_65db.jpg"))
-        adapterVanPhong = RecyclerViewLaptop()
-        adapterVanPhong.setData(laptopVanPhong, R.layout.laptop_item_row)
+        adapterVanPhong = RecyclerViewLaptopAdapter(object : RecyclerViewLaptopAdapter.ClickItem{
+            override fun showInfoItem(sanPham: SanPham) {
+                homeActivity.sendDataToDetailActivity(sanPham)
+            }
+        })
         recylerView3.layoutManager = LinearLayoutManager(context)
         recylerView3.adapter = adapterVanPhong
         recylerView3.setHasFixedSize(true)
     }
 
     private fun khoiTaoDataLapTopGaming() {
-        laptopGaming = ArrayList()
-        laptopGaming.add(SanPham("Laptop Gaming MSI", 9000000, "Laptop chơi game", "https://tangiahuy.vn/wp-content/uploads/2021/11/MSI-Gaming-GF65-Thin-10UE-228VN.jpg"))
-        laptopGaming.add(SanPham("Laptop Acer Nitro 5", 22390000, "Laptop chơi game", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/_/0/_0004_acer-nitro-5-an515-45-r86d-r7-58.jpg"))
-        laptopGaming.add(SanPham("Laptop ASUS Gaming FX506LH-HN002T", 20890000, "Laptop Gaming", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/1000x/040ec09b1e35df139433887a97daa66f/l/a/laptop-asus-tuf-gaming-f15-fx506lh_4_.jpg"))
-        laptopGaming.add(SanPham("Laptop Dell Gaming G15 Ryzen Edition", 28390000, "Laptop Gaming", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/_/0/_0003_dell-gaming-g15-5515-70266675_09_2.jpg"))
-        adapterGaming = RecyclerViewLaptop()
-        adapterGaming.setData(laptopGaming, R.layout.laptop_item_row)
+        adapterGaming = RecyclerViewLaptopAdapter(object : RecyclerViewLaptopAdapter.ClickItem{
+            override fun showInfoItem(sanPham: SanPham) {
+                homeActivity.sendDataToDetailActivity(sanPham)
+            }
+        })
         recylerView2.layoutManager = LinearLayoutManager(context)
         recylerView2.adapter = adapterGaming
         recylerView2.setHasFixedSize(true)
     }
 
     private fun khoiTaoDataLaptopTatCa() {
-        laptopTatCa = ArrayList()
-        laptopTatCa.add(SanPham("Laptop Gaming MSI", 9000000, "Laptop chơi game", "https://tangiahuy.vn/wp-content/uploads/2021/11/MSI-Gaming-GF65-Thin-10UE-228VN.jpg"))
-        laptopTatCa.add(SanPham("Laptop Acer Nitro 5", 22390000, "Laptop chơi game", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/_/0/_0004_acer-nitro-5-an515-45-r86d-r7-58.jpg"))
-        laptopTatCa.add(SanPham("Laptop Asus VivoBook", 18990000, "Laptop văn phòng", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/1000x/040ec09b1e35df139433887a97daa66f/_/0/_0004_asus-vivobook-a515ea-bq498t_65db.jpg"))
-        laptopTatCa.add(SanPham("MacBook Air M1", 29900000, "MacBook M1", "https://mac24h.vn/images/thumbnails/350/268/detailed/48/macbook-air_m1-2021-_MAC24H.png?t=1629457233"))
-        laptopTatCa.add(SanPham("Laptop ASUS Gaming FX506LH-HN002T", 20890000, "Laptop Gaming", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/1000x/040ec09b1e35df139433887a97daa66f/l/a/laptop-asus-tuf-gaming-f15-fx506lh_4_.jpg"))
-        laptopTatCa.add(SanPham("Laptop Dell Gaming G15 Ryzen Edition", 28390000, "Laptop Gaming", "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/_/0/_0003_dell-gaming-g15-5515-70266675_09_2.jpg"))
-        adapterTatCa = RecyclerViewHomeAdapter()
-        adapterTatCa.setData(laptopTatCa)
+        adapterTatCa = RecyclerViewHomeAdapter(object : RecyclerViewHomeAdapter.ClickItem{
+            override fun showInfoItem(sanPham: SanPham) {
+                homeActivity.sendDataToDetailActivity(sanPham)
+            }
+        })
         recylerView1.layoutManager = GridLayoutManager(context, 2)
         recylerView1.adapter = adapterTatCa
         recylerView1.setHasFixedSize(true)
+    }
+    private fun initArrayList(){
+        quangCaoList = ArrayList()
+        laptopTatCa = ArrayList()
+        laptopGaming = ArrayList()
+        laptopVanPhong = ArrayList()
+        laptopVanPhongMacbook = ArrayList()
+        laptopVanPhongBinhThuong = ArrayList()
     }
 
     private fun anhXa(view: View) {
@@ -158,7 +326,7 @@ class LaptopFragment : Fragment() {
         imgViewLaptop2=view.findViewById(R.id.imageViewLaptop2)
         viewPager=view.findViewById(R.id.viewPagerLaptop)
         circleIndicator=view.findViewById(R.id.circuleIndicatorLaptop)
-
+        homeActivity = activity as HomeActivity
         tabHost = view.findViewById(R.id.tabHostLaptopFragment)
         tabHost.setup()
 

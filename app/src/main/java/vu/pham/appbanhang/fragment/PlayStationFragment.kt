@@ -5,17 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vu.pham.appbanhang.R
+import vu.pham.appbanhang.activity.HomeActivity
 import vu.pham.appbanhang.adapter.RecyclerViewHomeAdapter
+import vu.pham.appbanhang.loaddata.GetListLoai
+import vu.pham.appbanhang.loaddata.GetListSanPham
+import vu.pham.appbanhang.model.Loai
 import vu.pham.appbanhang.model.SanPham
 
 class PlayStationFragment : Fragment() {
 
+    private lateinit var getListPlayStation:LoaderManager.LoaderCallbacks<ArrayList<SanPham>>
+    private val PLAYSTATION_ID=6
     private lateinit var recylerViewPlaystation:RecyclerView
+    private lateinit var homeActivity: HomeActivity
     private lateinit var adapterPlaystation : RecyclerViewHomeAdapter
     private lateinit var playStationList:ArrayList<SanPham>
+    private val sqlGetListPlayStation="SELECT sanpham.*, loaisanpham.tenloai FROM sanpham INNER JOIN loaisanpham ON sanpham.loai_id = loaisanpham.id WHERE loai_id = 2 ORDER BY id DESC"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,27 +34,48 @@ class PlayStationFragment : Fragment() {
         val view = inflater.inflate(R.layout.playstation_fragment, container, false)
         anhXa(view)
         khoiTaoDataRecyclerViewPlaystation()
+        getListPlaystation()
+
         return view
     }
 
     private fun khoiTaoDataRecyclerViewPlaystation() {
         playStationList = ArrayList()
-        playStationList = getListPlaystation()
-        adapterPlaystation = RecyclerViewHomeAdapter()
-        adapterPlaystation.setData(playStationList)
+        adapterPlaystation = RecyclerViewHomeAdapter(object : RecyclerViewHomeAdapter.ClickItem{
+            override fun showInfoItem(sanPham: SanPham) {
+                homeActivity.sendDataToDetailActivity(sanPham)
+            }
+        })
         recylerViewPlaystation.layoutManager = GridLayoutManager(context, 2)
         recylerViewPlaystation.adapter = adapterPlaystation
         recylerViewPlaystation.setHasFixedSize(true)
     }
-    private fun getListPlaystation():ArrayList<SanPham>{
-        val lists :ArrayList<SanPham> = ArrayList()
-        lists.add(SanPham("PlayStation 5", 10000000, "Máy PlayStation 5", "https://cdn.vjshop.vn/hightech/may-choi-game/ps5/sony-ps-5-1.jpg"))
-        lists.add(SanPham("PlayStation 4", 12390000, "Máy PlayStation 4", "https://vn-live-01.slatic.net/p/9139a532ac5a7966a7bbdb905771ffaa.png"))
-        lists.add(SanPham("PlayStation 3", 3000000, "Máy PlayStation 3", "https://media.baodansinh.vn/baodansinh/222978561005920256/2021/6/4/photo-1-1622737051903418202718-1622771824799-16227718253081347654825.jpg"))
-        return lists
+
+    private fun getListPlaystation(){
+        getListPlayStation = object : LoaderManager.LoaderCallbacks<ArrayList<SanPham>>{
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<ArrayList<SanPham>> {
+                return context?.let { GetListSanPham(it, sqlGetListPlayStation) }!!
+            }
+
+            override fun onLoadFinished(
+                loader: Loader<ArrayList<SanPham>>,
+                data: ArrayList<SanPham>?
+            ) {
+                if (data != null) {
+                    playStationList = data
+                    adapterPlaystation.setData(playStationList)
+                }
+            }
+
+            override fun onLoaderReset(loader: Loader<ArrayList<SanPham>>) {
+                playStationList.clear()
+            }
+        }
+        loaderManager.initLoader(PLAYSTATION_ID, null, getListPlayStation)
     }
 
     private fun anhXa(view: View) {
         recylerViewPlaystation=view.findViewById(R.id.recylerViewPlayStationFragment)
+        homeActivity = activity as HomeActivity
     }
 }

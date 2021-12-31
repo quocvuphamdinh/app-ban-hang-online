@@ -8,10 +8,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import vu.pham.appbanhang.R
+import vu.pham.appbanhang.model.QuangCao
 import vu.pham.appbanhang.model.SanPham
 
-class RecylerViewHomeAdapter3 : RecyclerView.Adapter<RecylerViewHomeAdapter3.HomeView3Holder>() {
+class RecylerViewHomeAdapter3 : RecyclerView.Adapter<RecylerViewHomeAdapter3.HomeView3Holder> {
     private var sanPhamBanChayList:ArrayList<SanPham> = ArrayList()
+    private var clickItem:CLickItem
+
+    constructor(clickItem: CLickItem) : super() {
+        this.clickItem = clickItem
+    }
+
+
+    interface CLickItem{
+        fun showInfoItem(sanPham: SanPham)
+    }
     fun setData(lists:ArrayList<SanPham>){
         this.sanPhamBanChayList=lists
         notifyDataSetChanged()
@@ -34,6 +45,13 @@ class RecylerViewHomeAdapter3 : RecyclerView.Adapter<RecylerViewHomeAdapter3.Hom
         val sanPham = sanPhamBanChayList[position]
         Picasso.get().load(sanPham.getHinhAnh()).into(holder.imgViewHinh3)
         holder.txtTen3.text = sanPham.getTenSanPham()
+
+        holder.imgViewHinh3.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
+        holder.txtTen3.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
     }
 
     override fun getItemCount(): Int {

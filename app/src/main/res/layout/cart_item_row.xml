@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <CheckBox
+            android:buttonTint="@color/custom_checkbox"
+            android:layout_marginStart="10dp"
+            android:id="@+id/checkBoxCartItem"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_marginStart="50dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/imageViewCartItem"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textViewTenCartItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:layout_toEndOf="@id/imageViewCartItem"
+            android:paddingHorizontal="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:id="@+id/textViewGiaCartItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTenCartItem"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/imageViewCartItem"
+            android:paddingHorizontal="10dp"
+            android:text="@string/app_name"
+            android:textColor="#F44336"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/linearCartItem"
+            android:layout_marginLeft="20dp"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/textViewGiaCartItem"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/imageViewCartItem"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/buttonGiamCartItem"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#C0C0C0"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="-"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewSoLuongCartItem"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttonTangCartItem"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F44336"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="+"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/textViewCreatAtCartItem"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/custom_textview_cart_item"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

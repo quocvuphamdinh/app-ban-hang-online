@@ -11,9 +11,18 @@ import vu.pham.appbanhang.R
 import vu.pham.appbanhang.model.SanPham
 import java.text.DecimalFormat
 
-class RecyclerViewLaptop : RecyclerView.Adapter<RecyclerViewLaptop.LaptopViewHolder>() {
+class RecyclerViewLaptopAdapter : RecyclerView.Adapter<RecyclerViewLaptopAdapter.LaptopViewHolder> {
     private var laptopList:ArrayList<SanPham> = ArrayList()
     private var layout : Int =0
+    private var clickItem:ClickItem
+
+    constructor(clickItem: ClickItem) : super() {
+        this.clickItem = clickItem
+    }
+
+    interface ClickItem{
+        fun showInfoItem(sanPham: SanPham)
+    }
     fun setData(lists:ArrayList<SanPham>, lay:Int){
         this.laptopList=lists
         this.layout=lay
@@ -41,6 +50,16 @@ class RecyclerViewLaptop : RecyclerView.Adapter<RecyclerViewLaptop.LaptopViewHol
         holder.txtTen.text = sanPham.getTenSanPham()
         val decimalFormat = DecimalFormat("###,###,###")
         holder.txtGia.text = "Giá: ${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
+
+        holder.imgHinh.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
+        holder.txtTen.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
+        holder.txtGia.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
     }
 
     override fun getItemCount(): Int {

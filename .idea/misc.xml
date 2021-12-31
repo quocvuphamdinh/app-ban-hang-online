@@ -3,18 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable-v24/custom_cursor_color_2.xml" value="0.2169230769230769" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_button_dismiss_cart.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_button_login.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_checkbox.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_cursor_color.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_cursor_color_2.xml" value="0.2169230769230769" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_edit_text_search.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_indicator.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_spinner.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_text_view_gia.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/custom_textview_cart_item.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/ic_back.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/ic_back_2.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/ic_online.xml" value="0.15260416666666668" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/ic_search.xml" value="0.2203125" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/drawable/ic_shopping_cart.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_detail.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_game.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_home.xml" value="0.23541666666666666" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/bottom_sheet_dialog_cart.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/cart_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/cart_item_bottom_sheet_dialog.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/cart_item_row.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/fragment_game.xml" value="0.13645833333333332" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/game_fragment.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/game_item_row.xml" value="0.33" />
@@ -22,15 +36,23 @@
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/home3_item_row.xml" value="0.33" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/home_fragment.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/home_item_row.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/keyboard_fragment.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/keyboard_item_row.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/laptop_fragment.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/laptop_item_row.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/list_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/mouse_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/mouse_item_row.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/phone_fragment.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/playstation_fragment.xml" value="0.25" />
-        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/profile_fragment.xml" value="0.33" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/profile_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/progressbar.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/tab1_laptop_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/tab2_laptop_layout.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/tab3_laptop_layout.xml" value="0.25" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/toolbar_activity_detail.xml" value="0.25" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/layout/view_pager_laptop_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/menu/menu_cart.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidCode/AppBanHang/app/src/main/res/menu/menu_nav_view.xml" value="0.25" />
       </map>
     </option>

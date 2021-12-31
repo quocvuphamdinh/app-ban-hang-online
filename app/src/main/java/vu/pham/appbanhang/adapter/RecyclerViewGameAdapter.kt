@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -41,26 +42,34 @@ class RecyclerViewGameAdapter : RecyclerView.Adapter<RecyclerViewGameAdapter.Gam
         }
 
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.game_item_row, parent, false)
         return GameHolder(view)
     }
 
+    override fun getItemCount(): Int {
+       return gameList.size
+    }
+
     override fun onBindViewHolder(holder: GameHolder, position: Int) {
-        var sanPham = gameList[position]
+        val sanPham = gameList[position]
         Picasso.get().load(sanPham.getHinhAnh()).into(holder.imgViewItemGame)
         holder.txtNameItemGame.text = sanPham.getTenSanPham()
         val decimalFormat = DecimalFormat("###,###,###")
         holder.txtGiaItemGame.text = "Giá: ${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
-        holder.txtMoTaItemGame.text = sanPham.getMoTa()
+        holder.txtMoTaItemGame.text = sanPham.getMoTa().subSequence(0, 70).toString()+"..."
 
         holder.imgViewItemGame.setOnClickListener {
             clickItem.showInfoItem(sanPham)
         }
-    }
-
-    override fun getItemCount(): Int {
-       return gameList.size
+        holder.txtNameItemGame.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
+        holder.txtGiaItemGame.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
+        holder.txtMoTaItemGame.setOnClickListener {
+            clickItem.showInfoItem(sanPham)
+        }
     }
 }

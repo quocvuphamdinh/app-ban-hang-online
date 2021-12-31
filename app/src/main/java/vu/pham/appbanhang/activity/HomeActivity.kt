@@ -3,6 +3,7 @@ package vu.pham.appbanhang.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -13,14 +14,26 @@ import vu.pham.appbanhang.R
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
 import com.google.android.material.navigation.NavigationView
 import vu.pham.appbanhang.fragment.*
+import vu.pham.appbanhang.loaddata.GetListLoai
+import vu.pham.appbanhang.model.Loai
 import vu.pham.appbanhang.model.SanPham
+import vu.pham.appbanhang.model.User
 import vu.pham.appbanhang.utils.CheckConnection
 import java.util.*
+import kotlin.collections.ArrayList
+
+
+
 
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+
+    private lateinit var listSanPham:ArrayList<SanPham>
+    private lateinit var user: User
     private lateinit var sanPhamDetail: SanPham
     private var onlineChange =true
     private lateinit var drawerLayout:DrawerLayout
@@ -34,6 +47,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val PROFILE_FRAGMENT=4
     private val PLAYSTATION_FRAGMENT=5
     private val PHONE_FRAGMENT=6
+    private val MOUSE_FRAGMENT=7
+    private val KEYBOARD_FRAGMENT=8
+    private val CART_FRAGMENT=9
     private var currentFragment=HOME_FRAGMENT
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +59,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if(CheckConnection.haveNetworkConnection(this@HomeActivity)){
             eventNavigationDrawer()
             eventHeaderNavigationDrawer()
+            getUser()
+            replaceFragment(HomeFragment())
+            navigationView.menu.findItem(R.id.menu_home).isChecked = true
         }else{
             CheckConnection.showToastShort(this@HomeActivity, "Không có Internet !")
             finish()
         }
-        replaceFragment(HomeFragment())
-        navigationView.menu.findItem(R.id.menu_home).isChecked = true
+    }
+
+    private fun getUser() {
+        val intent = intent
+        val bundle = intent.extras
+        user = bundle?.getParcelable("user")!!
+        txtTenHeader.text = user.getFullName()
     }
 
     private fun anhXa() {
@@ -68,16 +92,19 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 onlineChange=false
                 txtOnlineHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_offline, 0)
                 txtOnlineHeader.text=resources.getString(R.string.offline)
+                user.setStatus(1)
             }else{
                 onlineChange=true
                 txtOnlineHeader.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_online, 0)
                 txtOnlineHeader.text=resources.getString(R.string.online)
+                user.setStatus(0)
             }
         }
         navigationView.setNavigationItemSelectedListener(this)
     }
 
     private fun eventNavigationDrawer() {
+        setSupportActionBar(toolbarManHinhHome)
         val toggle = ActionBarDrawerToggle(this@HomeActivity, drawerLayout, toolbarManHinhHome,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout.addDrawerListener(toggle)
@@ -85,6 +112,31 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbarManHinhHome.title =resources.getString(R.string.app_title)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_cart, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_cart_2 -> {
+                if(currentFragment!=CART_FRAGMENT){
+                    replaceFragment(CartFragment())
+                    currentFragment = CART_FRAGMENT
+                    navigationView.menu.findItem(R.id.menu_giohang).isChecked = true
+                    navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+                    navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+                    navigationView.menu.findItem(R.id.menu_home).isChecked=false
+                    navigationView.menu.findItem(R.id.menu_game).isChecked=false
+                    navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+                    navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                    navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                    navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id =item.itemId
         if(id==R.id.menu_home){
@@ -97,17 +149,23 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 navigationView.menu.findItem(R.id.menu_profile).isChecked=false
                 navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
                 navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
             }
         }else if (id==R.id.menu_game){
             if(currentFragment!=GAME_FRAGMENT){
                 replaceFragment(GameFragment())
                 currentFragment=GAME_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
                 navigationView.menu.findItem(R.id.menu_game).isChecked=true
+                navigationView.menu.findItem(R.id.menu_home).isChecked=false
                 navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
                 navigationView.menu.findItem(R.id.menu_profile).isChecked=false
                 navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
                 navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
             }
         }else if(id==R.id.menu_laptop){
             if(currentFragment!=LAPTOP_FRAGMENT){
@@ -119,6 +177,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 navigationView.menu.findItem(R.id.menu_profile).isChecked=false
                 navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
                 navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
             }
         }else if(id==R.id.menu_ps5){
             if(currentFragment!=PLAYSTATION_FRAGMENT){
@@ -130,6 +191,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 navigationView.menu.findItem(R.id.menu_game).isChecked=false
                 navigationView.menu.findItem(R.id.menu_profile).isChecked=false
                 navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
             }
         }else if(id==R.id.menu_smartphone){
             if(currentFragment!=PHONE_FRAGMENT){
@@ -141,11 +205,38 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 navigationView.menu.findItem(R.id.menu_home).isChecked=false
                 navigationView.menu.findItem(R.id.menu_game).isChecked=false
                 navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
             }
         }else if(id==R.id.menu_mouse){
-
+            if(currentFragment!=MOUSE_FRAGMENT){
+                replaceFragment(MouseFragment())
+                currentFragment = MOUSE_FRAGMENT
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = true
+                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+                navigationView.menu.findItem(R.id.menu_home).isChecked=false
+                navigationView.menu.findItem(R.id.menu_game).isChecked=false
+                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+            }
         }else if(id==R.id.menu_keyboard){
-
+            if(currentFragment!=KEYBOARD_FRAGMENT){
+                replaceFragment(KeyBoardFragment())
+                currentFragment = KEYBOARD_FRAGMENT
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=true
+                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+                navigationView.menu.findItem(R.id.menu_home).isChecked=false
+                navigationView.menu.findItem(R.id.menu_game).isChecked=false
+                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+            }
         }else if(id==R.id.menu_profile){
             if(currentFragment!=PROFILE_FRAGMENT){
                 replaceFragment(ProfileFragment())
@@ -156,6 +247,23 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 navigationView.menu.findItem(R.id.menu_game).isChecked=false
                 navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
                 navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+            }
+        }else if(id==R.id.menu_giohang){
+            if(currentFragment!=CART_FRAGMENT){
+                replaceFragment(CartFragment())
+                currentFragment = CART_FRAGMENT
+                navigationView.menu.findItem(R.id.menu_giohang).isChecked = true
+                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+                navigationView.menu.findItem(R.id.menu_home).isChecked=false
+                navigationView.menu.findItem(R.id.menu_game).isChecked=false
+                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -164,17 +272,35 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun replaceFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.content_frame_main, fragment)
-        transaction.commit()
+        if(fragment is ProfileFragment || fragment is CartFragment){
+            val bundle = Bundle()
+            bundle.putParcelable("userProfile", user)
+            fragment.arguments = bundle
+        }
+        if(fragment is ListFragment){
+            val bundle = Bundle()
+            bundle.putParcelableArrayList("listSanPham", listSanPham)
+            fragment.arguments = bundle
+            transaction.add(R.id.content_frame_main, fragment)
+            transaction.commit()
+        }
+        if(fragment !is ListFragment){
+            transaction.replace(R.id.content_frame_main, fragment)
+            transaction.commit()
+        }
     }
     fun sendDataToDetailActivity(sanPham: SanPham){
-        sanPhamDetail = SanPham()
         sanPhamDetail = sanPham
         val intent = Intent(this@HomeActivity, DetailActivity::class.java)
         val bundle = Bundle()
-        bundle.putSerializable("sanpham", sanPham)
+        bundle.putParcelable("sanpham", sanPhamDetail)
+        bundle.putParcelable("userCart", user)
         intent.putExtras(bundle)
         startActivity(intent)
-        //Toast.makeText(this@HomeActivity, "Sản phẩm: ${sanPham.getTenSanPham()}", Toast.LENGTH_SHORT).show()
+        overridePendingTransition(0, 0)
+    }
+    fun sendDataToListFragment(lists:ArrayList<SanPham>){
+        listSanPham = lists
+        replaceFragment(ListFragment())
     }
 }

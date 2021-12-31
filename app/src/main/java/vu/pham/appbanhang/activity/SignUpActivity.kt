@@ -1,6 +1,5 @@
 package vu.pham.appbanhang.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -51,12 +50,5 @@ class SignUpActivity : AppCompatActivity() {
         var fullname = binding.editTextHoTenSignup.text.toString().trim()
         var username = binding.editTextUsernameSignup.text.toString().trim()
         var password = binding.editTextPasswordSignup.text.toString().trim()
-        var user = User(fullname, username, password)
-        if(user.isValidUser()){
-            Toast.makeText(this@SignUpActivity, "Đăng ký thành công !", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(this@SignUpActivity, "Đăng ký thất bại !"+"\nHọ tên không hợp lệ"+"\nTên tài khoản phải đủ 5 ký tự trở lên"+
-                "\nMật khẩu phải đủ 6 ký tự trở lên", Toast.LENGTH_LONG).show()
-        }
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.widget.Toast
 
-
 class CheckConnection {
     companion object{
         fun haveNetworkConnection(context: Context): Boolean {
