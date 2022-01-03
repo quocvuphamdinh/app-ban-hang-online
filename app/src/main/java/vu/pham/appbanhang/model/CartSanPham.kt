@@ -1,8 +1,10 @@
 package vu.pham.appbanhang.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import java.sql.Timestamp
 
-class CartSanPham {
+class CartSanPham() :Parcelable {
     private var id:Long=0
     private var userId:Long=0
     private var sanPhamId:Long=0
@@ -18,7 +20,33 @@ class CartSanPham {
     private var tenSanPham:String=""
     private var giaSanPham:Int =0
     private var hinhAnh:String=""
+    private var soLuongSanPham:Int =0
 
+    constructor(parcel: Parcel) : this() {
+        id = parcel.readLong()
+        userId = parcel.readLong()
+        sanPhamId = parcel.readLong()
+        trangThai = parcel.readLong()
+        trangThaiName = parcel.readString().toString()
+        soLuong = parcel.readInt()
+        selected = parcel.readInt()
+        tongTien = parcel.readInt()
+        deleted = parcel.readInt()
+        tenSanPham = parcel.readString().toString()
+        giaSanPham = parcel.readInt()
+        hinhAnh = parcel.readString().toString()
+        soLuongSanPham = parcel.readInt()
+//        createAt =  Timestamp(parcel.readLong())
+//        updateAt = Timestamp(parcel.readLong())
+//        deletedAt = Timestamp(parcel.readLong())
+    }
+
+    fun getSoLuongSanPham():Int{
+        return soLuongSanPham
+    }
+    fun setSoLuongSanPham(soluong:Int){
+        soLuongSanPham = soluong
+    }
     fun getTongTien():Int{
         return tongTien
     }
@@ -108,5 +136,38 @@ class CartSanPham {
     }
     fun setHinhAnh(hinh:String){
         hinhAnh=hinh
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(id)
+        parcel.writeLong(userId)
+        parcel.writeLong(sanPhamId)
+        parcel.writeLong(trangThai)
+        parcel.writeString(trangThaiName)
+        parcel.writeInt(soLuong)
+        parcel.writeInt(selected)
+        parcel.writeInt(tongTien)
+        parcel.writeInt(deleted)
+        parcel.writeString(tenSanPham)
+        parcel.writeInt(giaSanPham)
+        parcel.writeString(hinhAnh)
+        parcel.writeInt(soLuongSanPham)
+//        createAt?.date?.let { parcel.writeLong(it.toLong()) }
+//        updateAt?.date?.let { parcel.writeLong(it.toLong()) }
+//        deletedAt?.date?.let { parcel.writeLong(it.toLong()) }
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<CartSanPham> {
+        override fun createFromParcel(parcel: Parcel): CartSanPham {
+            return CartSanPham(parcel)
+        }
+
+        override fun newArray(size: Int): Array<CartSanPham?> {
+            return arrayOfNulls(size)
+        }
     }
 }

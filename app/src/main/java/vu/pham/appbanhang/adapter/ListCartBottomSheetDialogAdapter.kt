@@ -40,11 +40,13 @@ class ListCartBottomSheetDialogAdapter : BaseAdapter {
         var imgHinh:ImageView
         var txtTen:TextView
         var txtGia:TextView
+        var txtSoLuong:TextView
 
         init {
             imgHinh = view.findViewById(R.id.imageViewCartBottomSheetDialog)
             txtTen = view.findViewById(R.id.textViewTenCartBottomSheetDialog)
             txtGia = view.findViewById(R.id.textViewGiaCartBottomSheetDialog)
+            txtSoLuong = view.findViewById(R.id.textViewSoLuongCartItemBottomSheet)
         }
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -63,7 +65,8 @@ class ListCartBottomSheetDialogAdapter : BaseAdapter {
         Picasso.get().load(cartSanPham.getHinhAnh()).into(holder.imgHinh)
         holder.txtTen.text = cartSanPham.getTenSanPham()
         val decimalFormat = DecimalFormat("###,###,###")
-        holder.txtGia.text="${decimalFormat.format(cartSanPham.getGiaSanPham())} Đ"
+        holder.txtGia.text="${decimalFormat.format(cartSanPham.getGiaSanPham() * cartSanPham.getSoLuong())} Đ"
+        holder.txtSoLuong.text ="Số lượng: ${cartSanPham.getSoLuong()}"
         return view
     }
 }

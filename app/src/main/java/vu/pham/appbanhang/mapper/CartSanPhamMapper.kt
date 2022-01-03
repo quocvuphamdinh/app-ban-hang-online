@@ -20,6 +20,7 @@ class CartSanPhamMapper {
         cartSanPham.setTenSanPham(resultSet.getString("tensanpham"))
         cartSanPham.setGiaSanPham(resultSet.getInt("giasanpham"))
         cartSanPham.setHinhAnh(resultSet.getString("hinhanh"))
+        cartSanPham.setSoLuongSanPham(resultSet.getInt("soluongsanpham"))
         return cartSanPham
     }
 }

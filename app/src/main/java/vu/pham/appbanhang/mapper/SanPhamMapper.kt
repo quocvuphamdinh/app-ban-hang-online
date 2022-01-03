@@ -17,6 +17,7 @@ class SanPhamMapper() {
         sanPham.setDeleted(resultSet.getInt("deleted"))
         sanPham.setDeletedAt(resultSet.getTimestamp("deleted_at"))
         sanPham.setLoaiName(resultSet.getString("tenloai"))
+        sanPham.setSoLuongSanPham(resultSet.getInt("soluongsanpham"))
         return sanPham
     }
 }

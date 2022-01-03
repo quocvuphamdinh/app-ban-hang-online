@@ -16,6 +16,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/imageViewDetail"
                 android:layout_width="150dp"
@@ -24,7 +25,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop" />
             <TextView
                 android:gravity="center"
                 android:id="@+id/textViewLoaiSanPhamDetail"
@@ -34,6 +35,16 @@
                 android:layout_below="@id/imageViewDetail"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/textViewSoLuongSanPhamHienCo"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewLoaiSanPhamDetail"
+                android:layout_marginStart="10dp"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/textViewTenDetail"
@@ -88,7 +99,7 @@
                 android:id="@+id/txtMoTaChitiet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/buttonThemGioHang"
+                android:layout_below="@id/textViewSoLuongSanPhamHienCo"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"

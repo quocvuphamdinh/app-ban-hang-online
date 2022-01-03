@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ThanhToanActivity"
+    android:background="#DCDCDC">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBarThanhToan"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#F44336"
+        app:titleTextColor="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingStart="80dp"
+            android:text="Thanh Toán"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.cardview.widget.CardView
+        android:layout_below="@+id/toolBarThanhToan"
+        android:id="@+id/cardViewDiaChiNhanHangDefault"
+        app:cardElevation="10dp"
+        android:layout_marginVertical="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewTitleDiaChiNhanHang"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"
+                android:text="Địa chỉ nhận hàng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_location" />
+
+            <TextView
+                android:id="@+id/textViewAddDiaChi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTitleDiaChiNhanHang"
+                android:layout_marginStart="35dp"
+                android:drawableEnd="@drawable/ic_add_location"
+                android:paddingVertical="10dp"
+                android:text="Bạn chưa có địa chỉ nào. Nhấn vào để thêm mới"
+                android:textColor="#F44336"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/textViewHoTenVaSDT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTitleDiaChiNhanHang"
+                android:layout_marginStart="35dp"
+                android:text="Phạm Đình Quốc Vũ | 0945505029"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/textViewDiaChiNhanHang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewHoTenVaSDT"
+                android:layout_marginStart="35dp"
+                android:text="532/31, Lê Văn Thọ, Phường 16, Quận Gò Vấp, TP.Hồ Chí Minh"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ic_next" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ListView
+        android:id="@+id/listViewThanhToan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/cardView2"
+        android:layout_below="@id/cardViewDiaChiNhanHangDefault"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white" />
+
+    <androidx.cardview.widget.CardView
+        app:cardElevation="20dp"
+        android:id="@+id/cardView2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonDatHang"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="#F44336"
+                android:text="Đặt hàng"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewTongThanhToanTitle"
+                android:textStyle="bold"
+                android:paddingEnd="10dp"
+                android:gravity="end"
+                android:text="Tổng thanh toán"
+                android:layout_toStartOf="@id/buttonDatHang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/textViewTongTienThanhToan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTongThanhToanTitle"
+                android:layout_toStartOf="@id/buttonDatHang"
+                android:gravity="end"
+                android:paddingEnd="10dp"
+                android:text="1,000,000 Đ"
+                android:textColor="#F44336"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

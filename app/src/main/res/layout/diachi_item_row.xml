@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="10dp"
+    android:background="@color/white"
+    app:mode="same_level"
+    app:dragEdge="right"
+    android:id="@+id/swipeRevealLayoutDiaChiItem">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/layout_edit_diachi_item"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Sửa"
+            android:background="#FF9800"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/layout_delete_diachi_item"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Xóa"
+            android:background="@android:color/holo_red_dark"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/layout_diachi_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textViewHoTenDiaChiItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewPhoneDiaChiItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewHoTenDiaChiItem"
+            android:layout_marginStart="10dp"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewAddressDiaChiItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewPhoneDiaChiItem"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toStartOf="@id/imgDiaChiTem"
+            android:paddingEnd="10dp"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/imgDiaChiTem"
+            android:layout_below="@id/textViewPhoneDiaChiItem"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/imageViewTickDefault"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/textViewHoTenDiaChiItem"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_tick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

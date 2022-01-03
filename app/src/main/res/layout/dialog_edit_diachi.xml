@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edtTextHoTenDiaChiEdit"
+        android:backgroundTint="#F44336"
+        android:layout_margin="10dp"
+        android:hint="Họ và tên"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_below="@id/edtTextHoTenDiaChiEdit"
+        android:id="@+id/edtTextPhoneDiaChiEdit"
+        android:backgroundTint="#F44336"
+        android:layout_margin="10dp"
+        android:hint="Số điện thoại"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_below="@id/edtTextPhoneDiaChiEdit"
+        android:id="@+id/edtTextAddressDiaChiEdit"
+        android:backgroundTint="#F44336"
+        android:layout_margin="10dp"
+        android:hint="Địa chỉ nhà"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/buttonUpdateDiaChi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtTextAddressDiaChiEdit"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_button_login"
+        android:text="Cập nhật"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>

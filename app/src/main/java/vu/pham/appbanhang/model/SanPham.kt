@@ -17,6 +17,7 @@ class SanPham():Parcelable {
     private var updateAt: Timestamp?=null
     private var deleted:Int=0
     private var deletedAt: Timestamp?=null
+    private var soLuongSanPham:Int =0
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readLong()
@@ -30,8 +31,15 @@ class SanPham():Parcelable {
         createAt =  Timestamp(parcel.readLong())
         updateAt = Timestamp(parcel.readLong())
         deletedAt = Timestamp(parcel.readLong())
+        soLuongSanPham = parcel.readInt()
     }
 
+    fun getSoLuongSanPham():Int{
+        return soLuongSanPham
+    }
+    fun setSoLuongSanPham(soluong:Int){
+        soLuongSanPham = soluong
+    }
     fun getLoaiName():String{
         return LoaiName
     }
@@ -111,6 +119,7 @@ class SanPham():Parcelable {
         createAt?.date?.let { parcel.writeLong(it.toLong()) }
         updateAt?.date?.let { parcel.writeLong(it.toLong()) }
         deletedAt?.date?.let { parcel.writeLong(it.toLong()) }
+        parcel.writeInt(soLuongSanPham)
     }
 
     override fun describeContents(): Int {

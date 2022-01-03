@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edtTextHoTenDiaChi"
+        android:backgroundTint="#F44336"
+        android:layout_margin="10dp"
+        android:hint="Họ và tên"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_below="@id/edtTextHoTenDiaChi"
+        android:id="@+id/edtTextPhoneDiaChi"
+        android:backgroundTint="#F44336"
+        android:layout_margin="10dp"
+        android:hint="Số điện thoại"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_below="@id/edtTextPhoneDiaChi"
+        android:id="@+id/edtTextAddressDiaChi"
+        android:backgroundTint="#F44336"
+        android:layout_margin="10dp"
+        android:hint="Địa chỉ nhà"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:id="@+id/rela"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="#DCDCDC"
+        android:layout_below="@id/edtTextAddressDiaChi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp"
+            android:text="Đặt làm địa chỉ mặc định"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Switch
+            android:id="@+id/switchDefaulfAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:theme="@style/SCBSwitch"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonHoanThanhDiaChi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rela"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_button_login"
+        android:text="Hoàn thành"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>

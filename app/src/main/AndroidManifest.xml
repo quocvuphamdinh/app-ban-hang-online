@@ -3,7 +3,6 @@
     package="vu.pham.appbanhang">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBanHang">
+        <activity
+            android:name=".activity.DiaChiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ThanhToanActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.DetailActivity"
             android:exported="false" />

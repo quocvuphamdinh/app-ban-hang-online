@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DiaChiActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBarDiaChiActivity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#F44336"
+        app:titleTextColor="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingStart="40dp"
+            android:text="Chọn địa chỉ đặt hàng"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="#DCDCDC"
+        android:id="@+id/recyclerViewDiaChi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolBarDiaChiActivity" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="#F44336"
+        android:id="@+id/floatingActionButtonAdd"/>
+
+</RelativeLayout>

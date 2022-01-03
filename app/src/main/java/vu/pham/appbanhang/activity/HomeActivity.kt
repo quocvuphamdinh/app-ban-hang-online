@@ -19,6 +19,7 @@ import androidx.loader.content.Loader
 import com.google.android.material.navigation.NavigationView
 import vu.pham.appbanhang.fragment.*
 import vu.pham.appbanhang.loaddata.GetListLoai
+import vu.pham.appbanhang.model.CartSanPham
 import vu.pham.appbanhang.model.Loai
 import vu.pham.appbanhang.model.SanPham
 import vu.pham.appbanhang.model.User
@@ -302,5 +303,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun sendDataToListFragment(lists:ArrayList<SanPham>){
         listSanPham = lists
         replaceFragment(ListFragment())
+    }
+    fun sendDataToThanhToanActivity(cartList:ArrayList<CartSanPham>){
+        val intent = Intent(this@HomeActivity, ThanhToanActivity::class.java)
+        val bundle = Bundle()
+        bundle.putParcelable("userThanhToan", user)
+        bundle.putParcelableArrayList("listCartThanhToan", cartList)
+        intent.putExtras(bundle)
+        startActivity(intent)
+        overridePendingTransition(R.anim.login_to_sign_up, R.anim.sign_up_to_login)
     }
 }
