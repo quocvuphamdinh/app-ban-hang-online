@@ -9,11 +9,18 @@ class DonHang {
     private var tenDonHang:String=""
     private var trangThai:Long=0
     private var trangThaiName:String=""
+    private var addressUserId:Long=0
     private var addressUser:String=""
     private var tongTien:Int=0
     private var timeDatHang:Timestamp?=null
     private var timeThanhToan:Timestamp?=null
 
+    fun getAddressUserId():Long{
+        return addressUserId
+    }
+    fun setAddressUserId(addressUserId:Long){
+        this.addressUserId = addressUserId
+    }
     fun getId():Long{
         return id
     }
@@ -65,13 +72,13 @@ class DonHang {
     fun getTimeDatHang():Timestamp?{
         return timeDatHang
     }
-    fun setTimeDatHang(timeDatHang:Timestamp){
+    fun setTimeDatHang(timeDatHang:Timestamp?){
         this.timeDatHang = timeDatHang
     }
     fun getTimeThanhToan():Timestamp?{
         return timeThanhToan
     }
-    fun setTimeThanhToan(timeThanhToan:Timestamp){
+    fun setTimeThanhToan(timeThanhToan:Timestamp?){
         this.timeThanhToan = timeThanhToan
     }
 }

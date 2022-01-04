@@ -45,8 +45,12 @@ class ThanhToanActivity : AppCompatActivity() {
     private var GIOHANG_UPDATE_ID=300
     private var size=0
     private var size2=0
+    private var size3=0
     private var SANPHAM_UPDATE_ID=500
     private var random:SecureRandom = SecureRandom()
+    private var check1=false
+    private var check2=false
+    private var check3=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +69,14 @@ class ThanhToanActivity : AppCompatActivity() {
             goToDiaChiPage()
         }
         buttonDatHang.setOnClickListener {
-            for (i in cartList.indices){
-                updateSanPham(cartList[i])
+            if (diaChiUser.getId()==0L){
+                Toast.makeText(this@ThanhToanActivity, "Bạn chưa chọn địa chỉ đặt hàng", Toast.LENGTH_SHORT).show()
+            }else{
+                for (i in  0 until cartList.size){
+                    updateSanPham(cartList[i])
+                    updateGioHang(cartList[i].getId())
+                    xacNhanDatHang(cartList[i])
+                }
             }
         }
     }
@@ -82,6 +92,7 @@ class ThanhToanActivity : AppCompatActivity() {
     }
 
     private fun updateSanPham(cartSanPhamUpdate:CartSanPham){
+        SANPHAM_UPDATE_ID+=1
         val soLuongNew = cartSanPhamUpdate.getSoLuongSanPham() - cartSanPhamUpdate.getSoLuong()
         sanPhamUpdateLoader = object : LoaderManager.LoaderCallbacks<Boolean>{
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<Boolean> {
@@ -93,14 +104,17 @@ class ThanhToanActivity : AppCompatActivity() {
                     if (data){
                         size2+=1
                         if (size2==cartList.size){
-                            for (i in cartList.indices){
-                                updateGioHang(cartList[i].getId())
+                            check1 = true
+                            if (check1&&check2&&check3){
+                                finish()
+                                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left)
                             }
                         }
                     }else{
                         Toast.makeText(this@ThanhToanActivity, "Cập nhật sản phẩm thất bại", Toast.LENGTH_SHORT).show()
                     }
-                    SANPHAM_UPDATE_ID+=1
+                }else{
+                    Toast.makeText(this@ThanhToanActivity, "Cập nhật sản phẩm thất bại 2", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -111,9 +125,10 @@ class ThanhToanActivity : AppCompatActivity() {
         supportLoaderManager.initLoader(SANPHAM_UPDATE_ID, null, sanPhamUpdateLoader)
     }
     private fun updateGioHang(idCart:Long) {
+        GIOHANG_UPDATE_ID+=1
         gioHangUpdateLoader = object : LoaderManager.LoaderCallbacks<Boolean>{
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<Boolean> {
-                return Update(this@ThanhToanActivity, "UPDATE giohang SET deleted= 1 WHERE id = $idCart")
+                return Update(this@ThanhToanActivity, "UPDATE giohang SET deleted= 1, selected = 0 WHERE id = $idCart")
             }
 
             override fun onLoadFinished(loader: Loader<Boolean>, data: Boolean?) {
@@ -121,15 +136,18 @@ class ThanhToanActivity : AppCompatActivity() {
                     if (data){
                        size+=1
                         if (size==cartList.size){
-                            for (i in cartList.indices){
-                                xacNhanDatHang(cartList[i])
+                            check2 = true
+                            if (check1&&check2&&check3){
+                                finish()
+                                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left)
                             }
                         }
                     }else{
                         Toast.makeText(this@ThanhToanActivity, "Lỗi giỏ hàng !", Toast.LENGTH_SHORT).show()
                     }
+                }else{
+                    Toast.makeText(this@ThanhToanActivity, "Cập nhật giỏ hàng thất bại", Toast.LENGTH_SHORT).show()
                 }
-                GIOHANG_UPDATE_ID+=1
             }
 
             override fun onLoaderReset(loader: Loader<Boolean>) {
@@ -139,17 +157,11 @@ class ThanhToanActivity : AppCompatActivity() {
         supportLoaderManager.initLoader(GIOHANG_UPDATE_ID, null, gioHangUpdateLoader)
     }
 
-    private fun tinhTongThanhToan2():Int{
-        var tong=0
-        for (element in cartList){
-            tong+= element.getTongTien()
-        }
-        return tong
-    }
     private fun xacNhanDatHang(cart:CartSanPham) {
-        val tongTien=tinhTongThanhToan2()
+        val tongTien=cart.getTongTien()
         val timeNow = Timestamp(System.currentTimeMillis())
         val nameRandom = getRandomName(14)
+        DONHANG_ID+=1
         datHangLoader = object : LoaderManager.LoaderCallbacks<Long>{
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<Long> {
                 return Insert(this@ThanhToanActivity, "INSERT INTO donhang (user_id, giohang_id, tendonhang, address_user, tongtien, time_dat_hang) " +
@@ -158,13 +170,18 @@ class ThanhToanActivity : AppCompatActivity() {
 
             override fun onLoadFinished(loader: Loader<Long>, data: Long?) {
                 if (data!=null){
+                    size3+=1
+                    if (size3==cartList.size){
+                        check3 = true
+                        if (check1&&check2&&check3){
+                            finish()
+                            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left)
+                        }
+                    }
                     Toast.makeText(this@ThanhToanActivity, "Đặt hàng thành công", Toast.LENGTH_SHORT).show()
                 }else{
                     Toast.makeText(this@ThanhToanActivity, "Đặt hàng thất bại", Toast.LENGTH_SHORT).show()
                 }
-                DONHANG_ID+=1
-                finish()
-                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left)
             }
 
             override fun onLoaderReset(loader: Loader<Long>) {
@@ -217,6 +234,7 @@ class ThanhToanActivity : AppCompatActivity() {
             override fun onLoadFinished(loader: Loader<DiaChi>, data: DiaChi?) {
                 if (data!=null){
                     if (data.getId()==0L){
+                        diaChiUser = data
                         txtAddDiaChi.visibility = View.VISIBLE
                         txtHoTenVaSDT.visibility = View.GONE
                         txtDiaChiNhanHang.visibility = View.GONE

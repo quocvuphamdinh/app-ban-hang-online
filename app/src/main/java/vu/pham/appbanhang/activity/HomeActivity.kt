@@ -298,7 +298,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun replaceFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
-        if(fragment is ProfileFragment || fragment is CartFragment){
+        if(fragment is ProfileFragment || fragment is CartFragment || fragment is DonHangFragment){
             val bundle = Bundle()
             bundle.putParcelable("userProfile", user)
             fragment.arguments = bundle
@@ -341,5 +341,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         intent.putExtras(bundle)
         startActivity(intent)
         overridePendingTransition(R.anim.login_to_sign_up, R.anim.sign_up_to_login)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left)
     }
 }
