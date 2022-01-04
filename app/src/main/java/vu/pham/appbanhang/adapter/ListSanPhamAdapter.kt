@@ -40,11 +40,13 @@ class ListSanPhamAdapter : BaseAdapter {
         val txtTen:TextView
         val txtGia:TextView
         val txtMoTa:TextView
+        val imgViewSoldOut:ImageView
         init {
             imgHinh = view.findViewById(R.id.imageViewItemGameFragment)
             txtTen = view.findViewById(R.id.textViewNameItemGameFragment)
             txtGia = view.findViewById(R.id.textViewGiaItemGameFragment)
             txtMoTa = view.findViewById(R.id.textViewMoTaItemGameFragment)
+            imgViewSoldOut = view.findViewById(R.id.imageViewSoldOutGameItem)
         }
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -65,6 +67,12 @@ class ListSanPhamAdapter : BaseAdapter {
         val decimalFormat = DecimalFormat("###,###,###")
         holder.txtGia.text="Giá: ${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
         holder.txtMoTa.text = sanPham.getMoTa().subSequence(0, 70).toString()+"..."
+        if (sanPham.getSoLuongSanPham()<=0){
+            holder.imgViewSoldOut.visibility = View.VISIBLE
+        }else{
+            holder.imgViewSoldOut.visibility = View.INVISIBLE
+        }
+
         return view
     }
 }

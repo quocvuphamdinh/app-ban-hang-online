@@ -37,12 +37,14 @@ class RecyclerViewMouseAdapter : RecyclerView.Adapter<RecyclerViewMouseAdapter.V
         var txtTen:TextView
         var txtGia:TextView
         var txtMoTa:TextView
+        var imgSoldOut:ImageView
 
         init {
             imageView = itemView.findViewById(R.id.imageViewMouseItem)
             txtTen = itemView.findViewById(R.id.textViewTenMouseItem)
             txtGia = itemView.findViewById(R.id.textViewGiaMouseItem)
             txtMoTa = itemView.findViewById(R.id.textViewMoTaMouseItem)
+            imgSoldOut = itemView.findViewById(R.id.imageViewSoldOutMouseItem)
         }
     }
 
@@ -58,6 +60,11 @@ class RecyclerViewMouseAdapter : RecyclerView.Adapter<RecyclerViewMouseAdapter.V
         val decimalFormat = DecimalFormat("###,###,###")
         holder.txtGia.text = "Giá: ${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
         holder.txtMoTa.text = sanPham.getMoTa().subSequence(0, 60).toString()+"..."
+        if (sanPham.getSoLuongSanPham()<=0){
+            holder.imgSoldOut.visibility = View.VISIBLE
+        }else{
+            holder.imgSoldOut.visibility = View.INVISIBLE
+        }
 
         holder.imageView.setOnClickListener {
             clickItem.showItemInfo(sanPham)

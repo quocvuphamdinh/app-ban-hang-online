@@ -9,7 +9,6 @@ class CartMapper {
         cart.setId(resultSet.getLong("id"))
         cart.setUserId(resultSet.getLong("user_id"))
         cart.setSanPhamId(resultSet.getLong("sanpham_id"))
-        cart.setTrangThai(resultSet.getLong("trangthai"))
         cart.setCreateAt(resultSet.getTimestamp("create_at"))
         cart.setUpdateAt(resultSet.getTimestamp("update_at"))
         cart.setDeleted(resultSet.getInt("deleted"))

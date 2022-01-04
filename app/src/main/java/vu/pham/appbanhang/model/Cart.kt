@@ -8,8 +8,6 @@ class Cart() : Parcelable {
     private var id:Long=0
     private var userId:Long=0
     private var sanPhamId:Long=0
-    private var trangThai:Long=0
-    private var trangThaiName:String=""
     private var soLuong:Int=0
     private var selected:Int=0
     private var tongTien:Int=0
@@ -22,8 +20,6 @@ class Cart() : Parcelable {
         id = parcel.readLong()
         userId = parcel.readLong()
         sanPhamId = parcel.readLong()
-        trangThai = parcel.readLong()
-        trangThaiName = parcel.readString().toString()
         soLuong = parcel.readInt()
         deleted = parcel.readInt()
         createAt =  Timestamp(parcel.readLong())
@@ -62,18 +58,6 @@ class Cart() : Parcelable {
     }
     fun setSanPhamId(id:Long){
         sanPhamId = id
-    }
-    fun getTrangThai():Long{
-        return trangThai
-    }
-    fun setTrangThai(status:Long){
-        trangThai = status
-    }
-    fun getTrangThaiName():String{
-        return trangThaiName
-    }
-    fun setTrangThaiName(statusName:String){
-        trangThaiName = statusName
     }
     fun getId():Long{
         return id
@@ -114,8 +98,6 @@ class Cart() : Parcelable {
         parcel.writeLong(id)
         parcel.writeLong(userId)
         parcel.writeLong(sanPhamId)
-        parcel.writeLong(trangThai)
-        parcel.writeString(trangThaiName)
         parcel.writeInt(soLuong)
         parcel.writeInt(deleted)
         createAt?.date?.let { parcel.writeLong(it.toLong()) }

@@ -42,11 +42,13 @@ class ListKeyBoardAdapter : BaseAdapter {
         var txtTen:TextView
         var txtGia:TextView
         var txtMoTa:TextView
+        var imgViewSoldOut:ImageView
         init {
             imgHinh=view.findViewById(R.id.imageViewKeyBoardItem)
             txtTen = view.findViewById(R.id.textViewTenKeyBoardItem)
             txtGia = view.findViewById(R.id.textViewGiaKeyBoardItem)
             txtMoTa = view.findViewById(R.id.textViewMoTaKeyBoardItem)
+            imgViewSoldOut = view.findViewById(R.id.imageViewSoldOutKeyBoardItem)
         }
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -67,6 +69,11 @@ class ListKeyBoardAdapter : BaseAdapter {
         val decimalFormat = DecimalFormat("###,###,###")
         holder.txtGia.text="${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
         holder.txtMoTa.text = sanPham.getMoTa().subSequence(0, 60).toString()+"..."
+        if (sanPham.getSoLuongSanPham()<=0){
+            holder.imgViewSoldOut.visibility = View.VISIBLE
+        }else{
+            holder.imgViewSoldOut.visibility = View.INVISIBLE
+        }
         return view
     }
 }

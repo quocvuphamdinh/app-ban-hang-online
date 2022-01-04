@@ -10,13 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageViewItemHome"
-            android:scaleType="fitCenter"
-            android:layout_gravity="center"
-            android:src="@drawable/googleg_standard_color_18"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp">
+            <ImageView
+                android:id="@+id/imageViewItemHome"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:src="@drawable/googleg_standard_color_18"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <ImageView
+                android:id="@+id/imageViewSoldOutItemHome"
+                android:layout_width="61dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:background="@null"
+                android:src="@drawable/sold_out" />
+        </FrameLayout>
         <TextView
             android:id="@+id/textviewTenItemHome"
             android:layout_marginTop="10dp"

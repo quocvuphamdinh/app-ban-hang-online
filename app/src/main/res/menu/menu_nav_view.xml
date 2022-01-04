@@ -32,6 +32,9 @@
             <item android:title="Giỏ hàng"
                 android:id="@+id/menu_giohang"
                 android:icon="@drawable/shopping_cart"/>
+            <item android:title="Đơn hàng của bạn"
+                android:id="@+id/menu_donhang"
+                android:icon="@drawable/bill"/>
             <item android:title="Profile"
                 android:id="@+id/menu_profile"
                 android:icon="@drawable/profile"/>

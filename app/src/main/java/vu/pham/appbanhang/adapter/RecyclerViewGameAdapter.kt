@@ -33,12 +33,14 @@ class RecyclerViewGameAdapter : RecyclerView.Adapter<RecyclerViewGameAdapter.Gam
         var txtNameItemGame:TextView
         var txtGiaItemGame:TextView
         var txtMoTaItemGame:TextView
+        var imgViewSoldOut:ImageView
 
         init {
             imgViewItemGame=itemView.findViewById(R.id.imageViewItemGameFragment)
             txtNameItemGame=itemView.findViewById(R.id.textViewNameItemGameFragment)
             txtGiaItemGame=itemView.findViewById(R.id.textViewGiaItemGameFragment)
             txtMoTaItemGame=itemView.findViewById(R.id.textViewMoTaItemGameFragment)
+            imgViewSoldOut = itemView.findViewById(R.id.imageViewSoldOutGameItem)
         }
 
     }
@@ -58,6 +60,11 @@ class RecyclerViewGameAdapter : RecyclerView.Adapter<RecyclerViewGameAdapter.Gam
         val decimalFormat = DecimalFormat("###,###,###")
         holder.txtGiaItemGame.text = "Giá: ${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
         holder.txtMoTaItemGame.text = sanPham.getMoTa().subSequence(0, 70).toString()+"..."
+        if (sanPham.getSoLuongSanPham()<=0){
+            holder.imgViewSoldOut.visibility = View.VISIBLE
+        }else{
+            holder.imgViewSoldOut.visibility = View.INVISIBLE
+        }
 
         holder.imgViewItemGame.setOnClickListener {
             clickItem.showInfoItem(sanPham)

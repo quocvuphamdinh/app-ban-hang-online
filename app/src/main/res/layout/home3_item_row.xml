@@ -12,11 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <ImageView
             android:id="@+id/imageViewPhuKienBanChayItem"
-            android:scaleType="fitXY"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:scaleType="fitXY" />
+        <ImageView
+            android:id="@+id/imageViewSoldOutItemBanChay"
+            android:layout_gravity="end"
+            android:src="@drawable/sold_out"
+            android:layout_width="61dp"
+            android:layout_height="50dp"/>
         <TextView
             android:id="@+id/textViewPhuKienBanChayItem"
             android:textStyle="bold"

@@ -55,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
     private fun checkCart(){
         checkCartLoader = object : LoaderManager.LoaderCallbacks<Cart>{
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cart> {
-                return GetCart(this@DetailActivity, "SELECT * FROM giohang WHERE user_id = ${user.getId()} AND sanpham_id = ${sanPham.getId()}")
+                return GetCart(this@DetailActivity, "SELECT * FROM giohang WHERE user_id = ${user.getId()} AND sanpham_id = ${sanPham.getId()} AND deleted = 0")
             }
 
             override fun onLoadFinished(loader: Loader<Cart>, data: Cart?) {

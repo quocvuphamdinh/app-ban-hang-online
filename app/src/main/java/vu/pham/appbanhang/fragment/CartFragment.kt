@@ -66,7 +66,7 @@ class CartFragment : Fragment() {
                     GetListCartSanPham(
                         it, "SELECT giohang.*, sanpham.tensanpham, sanpham.giasanpham, sanpham.hinhanh, sanpham.soluongsanpham FROM giohang \n" +
                                 "INNER JOIN sanpham ON giohang.sanpham_id = sanpham.id\n" +
-                                "WHERE giohang.user_id = ${user.getId()} ORDER BY giohang.id DESC")
+                                "WHERE giohang.user_id = ${user.getId()} AND giohang.deleted = 0 ORDER BY giohang.id DESC")
                 }!!
             }
 
@@ -87,7 +87,7 @@ class CartFragment : Fragment() {
         loaderManager.initLoader(CART_ID, null, cartLoader)
     }
     private fun updateCheckedCart(cartSanPhamCheck: CartSanPham){
-        var timeNow = Timestamp(System.currentTimeMillis())
+        val timeNow = Timestamp(System.currentTimeMillis())
         cartCheckLoader = object : LoaderManager.LoaderCallbacks<Boolean>{
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<Boolean> {
                 return context?.let { Update(it, "UPDATE giohang SET selected = ${cartSanPhamCheck.getSelected()}, soluong = ${cartSanPhamCheck.getSoLuong()}, " +

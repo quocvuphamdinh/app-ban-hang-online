@@ -31,11 +31,13 @@ class RecyclerViewLaptopAdapter : RecyclerView.Adapter<RecyclerViewLaptopAdapter
         var imgHinh:ImageView
         var txtTen:TextView
         var txtGia:TextView
+        var imgSoldOut:ImageView
 
         init {
             imgHinh=itemView.findViewById(R.id.imageViewHinhLaptopItem)
             txtTen=itemView.findViewById(R.id.textViewTenLaptopItem)
             txtGia=itemView.findViewById(R.id.textViewGiaLaptopItem)
+            imgSoldOut=itemView.findViewById(R.id.imageViewSoldOutLaptopItem)
         }
     }
 
@@ -50,6 +52,11 @@ class RecyclerViewLaptopAdapter : RecyclerView.Adapter<RecyclerViewLaptopAdapter
         holder.txtTen.text = sanPham.getTenSanPham()
         val decimalFormat = DecimalFormat("###,###,###")
         holder.txtGia.text = "Giá: ${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
+        if (sanPham.getSoLuongSanPham()<=0){
+            holder.imgSoldOut.visibility = View.VISIBLE
+        }else{
+            holder.imgSoldOut.visibility = View.INVISIBLE
+        }
 
         holder.imgHinh.setOnClickListener {
             clickItem.showInfoItem(sanPham)

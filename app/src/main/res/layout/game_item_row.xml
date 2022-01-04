@@ -7,53 +7,65 @@
     android:layout_height="100dp"
     android:layout_margin="5dp">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageViewItemGameFragment"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
-            android:layout_width="100dp"
-            android:layout_height="90dp"/>
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/textViewNameItemGameFragment"
-                android:layout_marginEnd="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:text="@string/app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/textViewGiaItemGameFragment"
-                android:layout_marginEnd="10dp"
-                android:textSize="14sp"
-                android:textColor="#FF9800"
-                android:layout_marginTop="10dp"
-                android:text="@string/app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/textViewMoTaItemGameFragment"
-                android:layout_marginEnd="10dp"
-                android:textSize="14sp"
-                android:layout_marginTop="10dp"
-                android:text="@string/app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/imageViewItemGameFragment"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:layout_width="100dp"
+                android:layout_height="90dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/textViewNameItemGameFragment"
+                    android:layout_marginEnd="10dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/textViewGiaItemGameFragment"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="14sp"
+                    android:textColor="#FF9800"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/textViewMoTaItemGameFragment"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
         </LinearLayout>
+        <ImageView
+            android:id="@+id/imageViewSoldOutGameItem"
+            android:layout_width="61dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:src="@drawable/sold_out" />
 
-
-    </LinearLayout>
+    </FrameLayout>
 
 
 

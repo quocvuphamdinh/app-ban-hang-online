@@ -32,11 +32,13 @@ class RecyclerViewHomeAdapter : RecyclerView.Adapter<RecyclerViewHomeAdapter.Hom
         var imgViewItemHome : ImageView
         var txtTenItemHome : TextView
         var txtGiaItemHome : TextView
+        var imgSoldOut : ImageView
 
         init {
             imgViewItemHome=itemView.findViewById(R.id.imageViewItemHome)
             txtTenItemHome=itemView.findViewById(R.id.textviewTenItemHome)
             txtGiaItemHome=itemView.findViewById(R.id.textviewGiaItemHome)
+            imgSoldOut = itemView.findViewById(R.id.imageViewSoldOutItemHome)
         }
     }
 
@@ -51,6 +53,11 @@ class RecyclerViewHomeAdapter : RecyclerView.Adapter<RecyclerViewHomeAdapter.Hom
         p0.txtTenItemHome.text=sanPham.getTenSanPham()
         val decimalFormat = DecimalFormat("###,###,###")
         p0.txtGiaItemHome.text="Giá: ${decimalFormat.format(sanPham.getGiaSanPham())} Đ"
+        if (sanPham.getSoLuongSanPham()<=0){
+            p0.imgSoldOut.visibility = View.VISIBLE
+        }else{
+            p0.imgSoldOut.visibility = View.INVISIBLE
+        }
 
         p0.imgViewItemHome.setOnClickListener {
             clickItem.showInfoItem(sanPham)

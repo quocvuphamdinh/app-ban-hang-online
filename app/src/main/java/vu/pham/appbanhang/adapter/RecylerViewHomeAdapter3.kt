@@ -30,9 +30,11 @@ class RecylerViewHomeAdapter3 : RecyclerView.Adapter<RecylerViewHomeAdapter3.Hom
     class HomeView3Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imgViewHinh3:ImageView
         var txtTen3:TextView
+        var imgSoldOut : ImageView
         init {
             imgViewHinh3 = itemView.findViewById(R.id.imageViewPhuKienBanChayItem)
             txtTen3=itemView.findViewById(R.id.textViewPhuKienBanChayItem)
+            imgSoldOut = itemView.findViewById(R.id.imageViewSoldOutItemBanChay)
         }
     }
 
@@ -45,6 +47,11 @@ class RecylerViewHomeAdapter3 : RecyclerView.Adapter<RecylerViewHomeAdapter3.Hom
         val sanPham = sanPhamBanChayList[position]
         Picasso.get().load(sanPham.getHinhAnh()).into(holder.imgViewHinh3)
         holder.txtTen3.text = sanPham.getTenSanPham()
+        if (sanPham.getSoLuongSanPham()<=0){
+            holder.imgSoldOut.visibility = View.VISIBLE
+        }else{
+            holder.imgSoldOut.visibility = View.INVISIBLE
+        }
 
         holder.imgViewHinh3.setOnClickListener {
             clickItem.showInfoItem(sanPham)
