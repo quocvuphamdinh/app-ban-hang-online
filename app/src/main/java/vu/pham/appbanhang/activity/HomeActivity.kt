@@ -1,14 +1,19 @@
 package vu.pham.appbanhang.activity
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.drawerlayout.widget.DrawerLayout
 import vu.pham.appbanhang.R
 import androidx.appcompat.widget.Toolbar
@@ -19,10 +24,7 @@ import androidx.loader.content.Loader
 import com.google.android.material.navigation.NavigationView
 import vu.pham.appbanhang.fragment.*
 import vu.pham.appbanhang.loaddata.GetListLoai
-import vu.pham.appbanhang.model.CartSanPham
-import vu.pham.appbanhang.model.Loai
-import vu.pham.appbanhang.model.SanPham
-import vu.pham.appbanhang.model.User
+import vu.pham.appbanhang.model.*
 import vu.pham.appbanhang.utils.CheckConnection
 import java.util.*
 import kotlin.collections.ArrayList
@@ -123,177 +125,215 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.menu_cart_2 -> {
                 if(currentFragment!=CART_FRAGMENT){
-                    replaceFragment(CartFragment())
-                    currentFragment = CART_FRAGMENT
-                    navigationView.menu.findItem(R.id.menu_giohang).isChecked = true
-                    navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                    navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                    navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                    navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                    navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                    navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                    navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                    navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                    goToGioHangFragment()
                 }
             }
         }
         return super.onOptionsItemSelected(item)
     }
+    private fun goToHomeFragment(){
+        replaceFragment(HomeFragment())
+        currentFragment=HOME_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_home).isChecked=true
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    private fun goToGameFragment(){
+        replaceFragment(GameFragment())
+        currentFragment=GAME_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_game).isChecked=true
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    private fun goToLaptopFragment(){
+        replaceFragment(LaptopFragment())
+        currentFragment = LAPTOP_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=true
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    private fun goToPlayStationFragment(){
+        replaceFragment(PlayStationFragment())
+        currentFragment = PLAYSTATION_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=true
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    private fun goToSmartPhoneFragment(){
+        replaceFragment(PhoneFragment())
+        currentFragment = PHONE_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=true
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    private fun goToMouseFragment(){
+        replaceFragment(MouseFragment())
+        currentFragment = MOUSE_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = true
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    private fun goToKeyBoardFragment(){
+        replaceFragment(KeyBoardFragment())
+        currentFragment = KEYBOARD_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=true
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    private fun goToProfileFragment(){
+        replaceFragment(ProfileFragment())
+        currentFragment = PROFILE_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=true
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    fun goToGioHangFragment(){
+        replaceFragment(CartFragment())
+        currentFragment = CART_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = true
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+    }
+    fun goToDonHangFragment(){
+        replaceFragment(DonHangFragment())
+        currentFragment = DONHANG_FRAGMENT
+        navigationView.menu.findItem(R.id.menu_donhang).isChecked = true
+        navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
+        navigationView.menu.findItem(R.id.menu_profile).isChecked=false
+        navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
+        navigationView.menu.findItem(R.id.menu_home).isChecked=false
+        navigationView.menu.findItem(R.id.menu_game).isChecked=false
+        navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
+        navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
+        navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
+        navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id =item.itemId
         if(id==R.id.menu_home){
             if(currentFragment!=HOME_FRAGMENT){
-                replaceFragment(HomeFragment())
-                currentFragment=HOME_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_home).isChecked=true
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+               goToHomeFragment()
             }
         }else if (id==R.id.menu_game){
             if(currentFragment!=GAME_FRAGMENT){
-                replaceFragment(GameFragment())
-                currentFragment=GAME_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_game).isChecked=true
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+               goToGameFragment()
             }
         }else if(id==R.id.menu_laptop){
             if(currentFragment!=LAPTOP_FRAGMENT){
-                replaceFragment(LaptopFragment())
-                currentFragment = LAPTOP_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=true
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+                goToLaptopFragment()
             }
         }else if(id==R.id.menu_ps5){
             if(currentFragment!=PLAYSTATION_FRAGMENT){
-                replaceFragment(PlayStationFragment())
-                currentFragment = PLAYSTATION_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=true
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+                goToPlayStationFragment()
             }
         }else if(id==R.id.menu_smartphone){
             if(currentFragment!=PHONE_FRAGMENT){
-                replaceFragment(PhoneFragment())
-                currentFragment = PHONE_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=true
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+                goToSmartPhoneFragment()
             }
         }else if(id==R.id.menu_mouse){
             if(currentFragment!=MOUSE_FRAGMENT){
-                replaceFragment(MouseFragment())
-                currentFragment = MOUSE_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = true
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+                goToMouseFragment()
             }
         }else if(id==R.id.menu_keyboard){
             if(currentFragment!=KEYBOARD_FRAGMENT){
-                replaceFragment(KeyBoardFragment())
-                currentFragment = KEYBOARD_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=true
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+                goToKeyBoardFragment()
             }
         }else if(id==R.id.menu_profile){
             if(currentFragment!=PROFILE_FRAGMENT){
-                replaceFragment(ProfileFragment())
-                currentFragment = PROFILE_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=true
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+                goToProfileFragment()
             }
         }else if(id==R.id.menu_giohang){
             if(currentFragment!=CART_FRAGMENT){
-                replaceFragment(CartFragment())
-                currentFragment = CART_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = true
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = false
+                goToGioHangFragment()
             }
         }else if (id==R.id.menu_donhang){
             if (currentFragment!=DONHANG_FRAGMENT){
-                replaceFragment(DonHangFragment())
-                currentFragment = DONHANG_FRAGMENT
-                navigationView.menu.findItem(R.id.menu_donhang).isChecked = true
-                navigationView.menu.findItem(R.id.menu_giohang).isChecked = false
-                navigationView.menu.findItem(R.id.menu_profile).isChecked=false
-                navigationView.menu.findItem(R.id.menu_laptop).isChecked=false
-                navigationView.menu.findItem(R.id.menu_home).isChecked=false
-                navigationView.menu.findItem(R.id.menu_game).isChecked=false
-                navigationView.menu.findItem(R.id.menu_ps5).isChecked=false
-                navigationView.menu.findItem(R.id.menu_smartphone).isChecked=false
-                navigationView.menu.findItem(R.id.menu_keyboard).isChecked=false
-                navigationView.menu.findItem(R.id.menu_mouse).isChecked = false
+                goToDonHangFragment()
             }
+        }else if(id == R.id.menu_logout){
+           showDialogLogOut()
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+    private fun showDialogLogOut(){
+        val dialog = Dialog(this@HomeActivity)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setContentView(R.layout.dialog_log_out)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val buttonConfirm = dialog.findViewById<Button>(R.id.buttonLogOut)
+        val buttonHuy = dialog.findViewById<Button>(R.id.buttonHuyLogOut)
+        buttonConfirm.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left)
+        }
+        buttonHuy.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     private fun replaceFragment(fragment: Fragment){
@@ -301,6 +341,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if(fragment is ProfileFragment || fragment is CartFragment || fragment is DonHangFragment){
             val bundle = Bundle()
             bundle.putParcelable("userProfile", user)
+            bundle.putSerializable("createAtUser", user.getCreateAt())
             fragment.arguments = bundle
         }
         if(fragment is ListFragment){
@@ -343,9 +384,25 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         overridePendingTransition(R.anim.login_to_sign_up, R.anim.sign_up_to_login)
     }
 
+    fun sendDataToDonHangDetailActivity(donHang: DonHang){
+        val intent = Intent(this@HomeActivity, DonHangDetailActivity::class.java)
+        val bundle = Bundle()
+        bundle.putLong("idDonHang", donHang.getId())
+        bundle.putLong("idDonHangAddress", donHang.getAddressUserId())
+        bundle.putLong("idGioHang", donHang.getGioHangId())
+        intent.putExtras(bundle)
+        startActivity(intent)
+        overridePendingTransition(R.anim.login_to_sign_up, R.anim.sign_up_to_login)
+    }
+    fun sendDataToEditTaiKhoanActivity(user: User){
+        val intent = Intent(this@HomeActivity, EditTaiKhoanActivity::class.java)
+        val bundle = Bundle()
+        bundle.putParcelable("userEdit", user)
+        intent.putExtras(bundle)
+        startActivity(intent)
+        overridePendingTransition(R.anim.login_to_sign_up, R.anim.sign_up_to_login)
+    }
     override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left)
+
     }
 }

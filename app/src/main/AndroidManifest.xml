@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBanHang">
         <activity
+            android:name=".activity.EditTaiKhoanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DonHangDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.DiaChiActivity"
             android:exported="false" />
         <activity

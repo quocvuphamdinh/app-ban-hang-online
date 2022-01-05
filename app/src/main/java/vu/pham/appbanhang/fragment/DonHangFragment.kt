@@ -10,6 +10,7 @@ import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vu.pham.appbanhang.R
+import vu.pham.appbanhang.activity.HomeActivity
 import vu.pham.appbanhang.adapter.RecyclerViewDonHangAdapter
 import vu.pham.appbanhang.loaddata.GetListCartSanPham
 import vu.pham.appbanhang.loaddata.GetListDonHang
@@ -22,6 +23,7 @@ class DonHangFragment : Fragment() {
 
     private lateinit var user: User
     private lateinit var recyclerViewDonHang:RecyclerView
+    private lateinit var homeActivity: HomeActivity
     private lateinit var donHangList:ArrayList<DonHang>
     private lateinit var cartList:ArrayList<CartSanPham>
     private lateinit var adapterDonHang:RecyclerViewDonHangAdapter
@@ -107,13 +109,18 @@ class DonHangFragment : Fragment() {
     }
 
     private fun initAdapter(){
-        adapterDonHang = RecyclerViewDonHangAdapter()
+        adapterDonHang = RecyclerViewDonHangAdapter(object : RecyclerViewDonHangAdapter.ClickItem{
+            override fun click(donHang: DonHang) {
+                homeActivity.sendDataToDonHangDetailActivity(donHang)
+            }
+        })
         recyclerViewDonHang.layoutManager = LinearLayoutManager(context)
         recyclerViewDonHang.adapter = adapterDonHang
         recyclerViewDonHang.setHasFixedSize(true)
     }
     private fun anhXa(view: View) {
         recyclerViewDonHang = view.findViewById(R.id.recyclerViewDonHang)
+        homeActivity = activity as HomeActivity
         donHangList= ArrayList()
         cartList = ArrayList()
     }

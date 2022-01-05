@@ -38,6 +38,9 @@
             <item android:title="Profile"
                 android:id="@+id/menu_profile"
                 android:icon="@drawable/profile"/>
+            <item android:title="Đăng xuất"
+                android:id="@+id/menu_logout"
+                android:icon="@drawable/logout"/>
         </menu>
     </item>
 

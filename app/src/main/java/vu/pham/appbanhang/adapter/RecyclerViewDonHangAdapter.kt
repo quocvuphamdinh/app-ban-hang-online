@@ -12,10 +12,19 @@ import vu.pham.appbanhang.model.CartSanPham
 import vu.pham.appbanhang.model.DonHang
 import java.text.DecimalFormat
 
-class RecyclerViewDonHangAdapter : RecyclerView.Adapter<RecyclerViewDonHangAdapter.DonHangHolder>(){
+class RecyclerViewDonHangAdapter : RecyclerView.Adapter<RecyclerViewDonHangAdapter.DonHangHolder>{
     private var donHangList:ArrayList<DonHang> = ArrayList()
     private var cartList:ArrayList<CartSanPham> = ArrayList()
+    private var clickItem:ClickItem
 
+    constructor(clickItem: ClickItem) : super() {
+        this.clickItem = clickItem
+    }
+
+
+    interface ClickItem{
+        fun click(donHang: DonHang)
+    }
     fun setData(lists1:ArrayList<DonHang>, lists2:ArrayList<CartSanPham>){
         this.donHangList = lists1
         this.cartList = lists2
@@ -64,6 +73,10 @@ class RecyclerViewDonHangAdapter : RecyclerView.Adapter<RecyclerViewDonHangAdapt
         holder.txtTrangThai.text = "Trạng thái đơn hàng: ${donHang.getTrangThaiName()}"
         holder.txtDiaChi.text = "Gửi tới: ${donHang.getAddressUser()}"
         holder.txtTenDonHang.text = "Đơn hàng: ${donHang.getTenDonHang()}"
+
+        holder.imgHinh.setOnClickListener {
+            clickItem.click(donHang)
+        }
     }
 
     override fun getItemCount(): Int {
